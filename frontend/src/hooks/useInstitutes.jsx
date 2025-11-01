@@ -1,0 +1,110 @@
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { AppContext } from "../context/AppContext";
+
+const useInstitutes = () => {
+  const {
+    VITE_BACKEND_BASE_URL,
+    institutes,
+    setInstitutes,
+    institutesLoaded,
+    setInstitutesLoaded,
+  } = useContext(AppContext);
+
+  const [loading, setLoading] = useState(!institutesLoaded);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (institutesLoaded) return;
+
+    // === LocalStorage Load & Expiry Check ===
+    const localCache = localStorage.getItem("cachedInstitutes");
+    if (localCache) {
+      try {
+        const parsed = JSON.parse(localCache);
+        const cacheTime = parsed.timestamp;
+        const now = Date.now();
+        const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+        if (now - cacheTime < sevenDays) {
+          // Cache is still valid
+          setInstitutes(parsed.data);
+          setInstitutesLoaded(true);
+          setLoading(false);
+          return;
+        } else {
+          // Cache expired
+          localStorage.removeItem("cachedInstitutes");
+        }
+      } catch (err) {
+        console.error("Invalid localStorage cache:", err);
+        localStorage.removeItem("cachedInstitutes");
+      }
+    }
+
+    // === Fallback to API if no cache or expired ===
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Default to localhost:3000 if VITE_BACKEND_BASE_URL is not defined
+        const baseUrl = VITE_BACKEND_BASE_URL || 'http://localhost:3000';
+        
+        // Make sure the URL is correct and includes http:// or https://
+        const apiUrl = baseUrl.startsWith('http') 
+          ? baseUrl 
+          : `http://${baseUrl}`;
+          
+        const res = await axios.get(
+          `${apiUrl}/api/institutes/all-institutes`,
+          { 
+            withCredentials: true,
+            // Ensure proper headers are set
+            headers: {
+              'Accept': 'application/json'
+            } 
+          }
+        );
+    
+        // Check if response is valid JSON
+        if (res.data && typeof res.data === 'object') {
+          if (res.data.status) {
+            setInstitutes(res.data.data || []);
+            setInstitutesLoaded(true);
+            localStorage.setItem(
+              "cachedInstitutes",
+              JSON.stringify({
+                data: res.data.data || [],
+                timestamp: Date.now(),
+              })
+            );
+          } else {
+            console.error("API returned error status:", res.data);
+            setError(res.data.message || "Data fetch failed");
+          }
+        } else {
+          console.error("Invalid response format:", res.data);
+          setError("Received invalid data format from server");
+        }
+      } catch (err) {
+        console.error("Error fetching institutes:", err);
+        setError(
+          err.response?.data?.message ||
+            "Unable to load institutes. Please try again later."
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [
+    institutesLoaded,
+    VITE_BACKEND_BASE_URL,
+    setInstitutes,
+    setInstitutesLoaded,
+  ]);
+
+  return { institutes, loading, error, setLoading, setError };
+};
+
+export default useInstitutes;

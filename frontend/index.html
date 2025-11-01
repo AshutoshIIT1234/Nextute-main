@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Nextute - Find the best educational institutes near you" />
+    <meta name="theme-color" content="#3b82f6" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- DNS prefetch for better performance -->
+    <link rel="dns-prefetch" href="//api.nextute.com" />
+    
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="/src/main.jsx" />
+    <link rel="modulepreload" href="/src/App.jsx" />
+    
+    <!-- Resource hints -->
+    <link rel="prefetch" href="/src/pages/HomePage.jsx" />
+    <link rel="prefetch" href="/src/components/Student/StudentLogin.jsx" />
+    
+    <!-- Critical font preload -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
+    
+    <title>Nextute - Educational Institute Discovery Platform</title>
+    
+    <!-- Critical CSS for instant rendering -->
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      #root { min-height: 100vh; background: #f9fafb; }
+      
+      /* Instant skeleton styles */
+      .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+      @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+      
+      /* Initial layout to prevent CLS */
+      .initial-layout { 
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh; 
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+      
+      .nav-skeleton { 
+        height: 64px; 
+        background: white; 
+        border-bottom: 1px solid #e5e7eb; 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+        padding: 0 1rem; 
+      }
+      
+      .nav-skeleton .logo { width: 120px; height: 32px; background: #e5e7eb; border-radius: 4px; }
+      .nav-skeleton .menu { display: flex; gap: 1rem; }
+      .nav-skeleton .menu-item { width: 80px; height: 32px; background: #e5e7eb; border-radius: 4px; }
+      
+      .hero-skeleton { 
+        background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%); 
+        padding: 5rem 1rem; 
+        text-align: center; 
+      }
+      
+      .hero-skeleton .title { width: 60%; max-width: 500px; height: 48px; background: #c7d2fe; margin: 0 auto 1.5rem; border-radius: 8px; }
+      .hero-skeleton .subtitle { width: 80%; max-width: 600px; height: 24px; background: #c7d2fe; margin: 0 auto 2rem; border-radius: 4px; }
+      .hero-skeleton .cta { width: 200px; height: 48px; background: #3b82f6; margin: 0 auto; border-radius: 8px; }
+      
+      .content-skeleton { 
+        flex: 1; 
+        padding: 2rem 1rem; 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        width: 100%; 
+      }
+      
+      .cards-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+        gap: 2rem; 
+        margin-top: 2rem; 
+      }
+      
+      .card-skeleton { 
+        background: white; 
+        padding: 1.5rem; 
+        border-radius: 8px; 
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+      }
+      
+      .card-skeleton .card-title { width: 70%; height: 24px; background: #e5e7eb; margin-bottom: 1rem; border-radius: 4px; }
+      .card-skeleton .card-text { width: 100%; height: 16px; background: #f3f4f6; margin-bottom: 0.5rem; border-radius: 4px; }
+      .card-skeleton .card-text:last-child { width: 80%; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="initial-layout" id="initial-skeleton">
+        <div class="nav-skeleton">
+          <div class="logo skeleton"></div>
+          <div class="menu">
+            <div class="menu-item skeleton"></div>
+            <div class="menu-item skeleton"></div>
+            <div class="menu-item skeleton"></div>
+          </div>
+        </div>
+        <div class="hero-skeleton">
+          <div class="title skeleton"></div>
+          <div class="subtitle skeleton"></div>
+          <div class="cta skeleton"></div>
+        </div>
+        <div class="content-skeleton">
+          <div class="cards-grid">
+            <div class="card-skeleton">
+              <div class="card-title skeleton"></div>
+              <div class="card-text skeleton"></div>
+              <div class="card-text skeleton"></div>
+              <div class="card-text skeleton"></div>
+            </div>
+            <div class="card-skeleton">
+              <div class="card-title skeleton"></div>
+              <div class="card-text skeleton"></div>
+              <div class="card-text skeleton"></div>
+              <div class="card-text skeleton"></div>
+            </div>
+            <div class="card-skeleton">
+              <div class="card-title skeleton"></div>
+              <div class="card-text skeleton"></div>
+              <div class="card-text skeleton"></div>
+              <div class="card-text skeleton"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
