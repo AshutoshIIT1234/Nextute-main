@@ -36,9 +36,26 @@ cd /root/Nextute-main
 # Backend setup
 echo "🔧 Setting up backend..."
 cd backend
+
+# Check if .env file exists
+if [ ! -f .env ]; then
+    echo "❌ Error: backend/.env file not found!"
+    echo "Please create /root/Nextute-main/backend/.env with your environment variables"
+    exit 1
+fi
+
 npm install
 npx prisma generate
-npx prisma migrate deploy
+
+# Check if database needs baselining or migration
+echo "🔍 Checking database state..."
+if npx prisma migrate deploy 2>&1 | grep -q "P3005"; then
+    echo "📊 Database already exists, baselining..."
+    npx prisma migrate resolve --applied "$(ls prisma/migrations | tail -n 1)"
+else
+    echo "🔄 Running migrations..."
+    npx prisma migrate deploy || true
+fi
 
 # Start backend with PM2
 echo "🚀 Starting backend..."
