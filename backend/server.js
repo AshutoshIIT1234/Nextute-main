@@ -15,6 +15,8 @@ import adminRoutes from "./routes/adminRoutes.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import jobRoutes from "./routes/jobRoutes.js";
 import paymentRoutes from './routes/paymentRoutes.js';
+import mentorshipRoutes from './routes/mentorshipRoutes.js';
+import chatbotRoutes from './routes/chatbotRoutes.js';
 
 dotenv.config();
 
@@ -95,6 +97,14 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/employees", employeeRoutes);
 app.use("/api/jobs/", jobRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/mentorship', mentorshipRoutes);
+app.use('/api/chat', chatbotRoutes);
+
+// Debug routes (only in development)
+if (process.env.NODE_ENV !== 'production') {
+  const debugRoutes = await import('./routes/debugRoutes.js');
+  app.use('/api/debug', debugRoutes.default);
+}
 
 // 404 handler
 app.use((req, res) => {

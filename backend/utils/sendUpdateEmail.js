@@ -17,7 +17,7 @@ const sendUpdateEmail = async (email) => {
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 10px;">
         <div style="text-align: center;">
-          <img src="cid:logo@nextute" alt="Logo" width="100" />
+          <h1 style="color: #007bff; margin: 0;">Nextute</h1>
           <h2 style="color: #333;">New Institute Available!</h2>
         </div>
         <p>Dear Subscriber,</p>
@@ -33,13 +33,6 @@ const sendUpdateEmail = async (email) => {
         </div>
       </div>
     `,
-    attachments: [
-      {
-        filename: "logo.png",
-        path: "https://res.cloudinary.com/drhrgs6y5/image/upload/v1750255401/logo_pumpy6.png",
-        cid: "logo@nextute",
-      },
-    ],
   };
 
   await transporter.sendMail(mailOptions);

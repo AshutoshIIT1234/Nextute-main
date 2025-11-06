@@ -9,6 +9,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import usePreloadRoutes from "./hooks/usePreloadRoutes";
 import usePerformanceMonitor from "./hooks/usePerformanceMonitor";
 import RouteBasedSkeleton from "./components/RouteSkeletons";
+import ChatBot from "./components/ChatBot";
 
 // Instant loaded components with aggressive caching
 import { createInstantLoader } from "./utils/instantLoader";
@@ -65,6 +66,9 @@ const EditSocialMedia = lazy(() => import("./components/Institute/Dashboard/Edit
 const OurTeam = lazy(() => import("./pages/OurTeam"));
 const MemberDetails = lazy(() => import("./pages/MemberDetails"));
 const QRScanner = lazy(() => import("./pages/QRScanner"));
+const CoursesComingSoon = lazy(() => import("./pages/CoursesComingSoon"));
+const MentorshipComingSoon = lazy(() => import("./pages/MentorshipComingSoon"));
+const MentorDetailPage = lazy(() => import("./pages/MentorDetailPage"));
 
 const App = memo(() => {
   const { showSignup, showLogin } = useContext(AppContext);
@@ -170,11 +174,14 @@ const App = memo(() => {
             <Route path="/team" element={<OurTeam />} />
             <Route path="/team/:certificateNo" element={<MemberDetails />} />
             <Route path="/scanner" element={<QRScanner />} />
+            <Route path="/services/courses" element={<CoursesComingSoon />} />
+            <Route path="/services/mentorship" element={<MentorshipComingSoon />} />
+            <Route path="/mentor/:id" element={<MentorDetailPage />} />
           </Routes>
         </Suspense>
         {showLogin && <LoginPopup />}
         {showSignup && <SignupPopup />}
-       
+        <ChatBot />
         <Toaster />
       </ErrorBoundary>
     </div>

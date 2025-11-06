@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import Tilt from "react-parallax-tilt";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { BsChatTextFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import * as assets from "../assets/index.js";
+import { card3DVariants, button3D, glowPulse } from "../utils/animations3D";
 
 // Default fallback image
 const DEFAULT_IMAGE =
@@ -116,22 +118,50 @@ const Card = ({ institute = defaultInstitute }) => {
   };
 
   return (
-    <motion.div
-      variants={cardVariants}
-      initial="hidden"
-      animate="visible"
-      whileHover="hover"
-      className="w-full max-w-[22rem] sm:max-w-[24rem] bg-gradient-to-br from-white to-emerald-50/20 border border-emerald-200/40 rounded-2xl shadow-md mx-auto my-4 overflow-hidden h-[28rem] sm:h-[30rem] flex flex-col"
-      onClick={() => navigate(`/institute/overview/${normalizedInstitute.id}`)}
+    <Tilt
+      tiltMaxAngleX={10}
+      tiltMaxAngleY={10}
+      perspective={1000}
+      scale={1.02}
+      transitionSpeed={2000}
+      gyroscope={true}
+      className="w-full max-w-[22rem] sm:max-w-[24rem] mx-auto my-4"
     >
+      <motion.div
+        variants={card3DVariants}
+        initial="initial"
+        whileInView="animate"
+        whileHover="hover"
+        viewport={{ once: true, amount: 0.3 }}
+        className="w-full bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/20 border border-emerald-200/40 rounded-2xl shadow-lg overflow-hidden h-[28rem] sm:h-[30rem] flex flex-col relative preserve-3d"
+        onClick={() => navigate(`/institute/overview/${normalizedInstitute.id}`)}
+      >
+        {/* Shimmer effect overlay */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          animate={{
+            x: ["-100%", "100%"],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "linear",
+            repeatDelay: 5
+          }}
+          style={{ pointerEvents: "none" }}
+        />
       {/* Image Section */}
-      <div className="w-full h-48 sm:h-56 aspect-[4/3] p-3">
+      <div className="w-full h-48 sm:h-56 aspect-[4/3] p-3 relative overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-t from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+        />
         <motion.img
           src={normalizedInstitute.image}
           alt={`Coaching - ${normalizedInstitute.name}`}
-          className="w-full h-full object-cover rounded-xl"
+          className="w-full h-full object-cover rounded-xl relative z-0"
           loading="lazy"
-          variants={imageVariants}
+          whileHover={{ scale: 1.08, rotate: 1 }}
+          transition={{ duration: 0.4 }}
           onError={(e) => {
             e.target.src = DEFAULT_IMAGE;
           }}
@@ -178,19 +208,28 @@ const Card = ({ institute = defaultInstitute }) => {
       {/* Button Section */}
       <div className="h-16 sm:h-20 flex items-center justify-center p-4 sm:p-5 pt-0">
         <motion.button
-          variants={buttonVariants}
+          variants={button3D}
+          initial="initial"
           whileHover="hover"
           whileTap="tap"
-          className="w-full max-w-48 bg-emerald-600 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
-          onClick={() =>
-            navigate(`/institute/overview/${normalizedInstitute.id}`)
-          }
+          className="w-full max-w-48 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl relative overflow-hidden preserve-3d"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/institute/overview/${normalizedInstitute.id}`);
+          }}
         >
-          <BsChatTextFill className="w-4 h-4 sm:w-5 sm:h-5" />
-          Enquiry Now
+          {/* Button glow effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0"
+            whileHover={{ opacity: 0.3 }}
+            transition={{ duration: 0.3 }}
+          />
+          <BsChatTextFill className="w-4 h-4 sm:w-5 sm:h-5 relative z-10" />
+          <span className="relative z-10">Enquiry Now</span>
         </motion.button>
       </div>
     </motion.div>
+    </Tilt>
   );
 };
 

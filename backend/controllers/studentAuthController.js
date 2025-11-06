@@ -350,23 +350,31 @@ export const fetchAllStudents = async (req, res) => {
 export const getStudentProfile = async (req, res) => {
   try {
     const student = req.student;
-    console.log("Profile - Student:", student);
+    console.log("📋 Profile Request - Student:", student.email, "Verified:", student.is_verified);
 
     if (!student) {
       return handleError(res, 404, "Student not found", "STUDENT_NOT_FOUND");
     }
 
     if (!student.is_verified) {
-      return handleError(res, 403, "Email not verified", "EMAIL_NOT_VERIFIED");
+      console.log("❌ Profile access denied - Email not verified for:", student.email);
+      return res.status(403).json({
+        status: false,
+        message: "Email not verified. Please verify your email to access your profile.",
+        error: "EMAIL_NOT_VERIFIED",
+        email: student.email,
+        requiresVerification: true,
+      });
     }
 
     const { password, code, ...safeStudent } = student;
+    console.log("✅ Profile access granted for:", student.email);
     return res.status(200).json({
       status: true,
       data: safeStudent,
     });
   } catch (err) {
-    console.error("Profile route error:", err);
+    console.error("❌ Profile route error:", err);
     return handleError(res, 500, "Failed to fetch profile", "PROFILE_ERROR");
   }
 };

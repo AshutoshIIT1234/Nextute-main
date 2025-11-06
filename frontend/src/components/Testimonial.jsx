@@ -89,6 +89,7 @@ const Testimonial = () => {
         spaceBetween={40}
         slidesPerView={1}
         slidesPerGroup={1}
+        loop={true}
         navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000, disableOnInteraction: false }}
