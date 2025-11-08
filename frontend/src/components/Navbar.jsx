@@ -17,19 +17,15 @@ const Navbar = () => {
   } = useContext(AppContext);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const location = useLocation();
 
   const dropdownRef = useRef(null);
   const profileButtonRef = useRef(null);
-  const servicesDropdownRef = useRef(null);
-  const servicesButtonRef = useRef(null);
 
   useEffect(() => {
     setIsDropdownOpen(false);
-    setIsServicesDropdownOpen(false);
     setShowMenu(false);
   }, [location]);
 
@@ -42,14 +38,6 @@ const Navbar = () => {
         !profileButtonRef.current.contains(event.target)
       ) {
         setIsDropdownOpen(false);
-      }
-      if (
-        servicesDropdownRef.current &&
-        !servicesDropdownRef.current.contains(event.target) &&
-        servicesButtonRef.current &&
-        !servicesButtonRef.current.contains(event.target)
-      ) {
-        setIsServicesDropdownOpen(false);
       }
     };
 
@@ -78,16 +66,14 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full bg-[#f2fffc] bg-opacity-60 backdrop-blur-md shadow-lg border-b border-gray-200 mb-5 sm:mb-10 sticky top-0 z-50"
+      className="w-full bg-[#f2fffc] bg-opacity-60 shadow-lg border-b border-gray-200 mb-5 sm:mb-10"
     >
     <div className="w-full max-w-[94rem] h-24 mx-auto flex items-center justify-between py-4 px-4 sm:px-8 relative">
       <NavLink to="/">
-        <motion.img
+        <img
           src={logo}
           alt="Nextute Logo"
           className="w-28 sm:w-32 lg:w-40"
-          whileHover={{ scale: 1.05, rotate: 2 }}
-          transition={{ duration: 0.3 }}
         />
       </NavLink>
 
@@ -98,7 +84,7 @@ const Navbar = () => {
             `nav-link ${isActive ? "active-nav-link" : ""}`
           }
         >
-          <motion.p whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Home</motion.p>
+          <p>Home</p>
         </NavLink>
         <NavLink
           to="/about"
@@ -106,56 +92,24 @@ const Navbar = () => {
             `nav-link ${isActive ? "active-nav-link" : ""}`
           }
         >
-          <motion.p whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>About Us</motion.p>
+          <p>About Us</p>
         </NavLink>
-        <div className="relative">
-          <button
-            ref={servicesButtonRef}
-            onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
-            className="nav-link flex items-center gap-1"
-          >
-            <p>Services</p>
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </button>
-
-          {isServicesDropdownOpen && (
-            <motion.div
-              ref={servicesDropdownRef}
-              className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 overflow-hidden"
-              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-            >
-              <NavLink
-                to="/services/courses"
-                className="block px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
-                onClick={() => setIsServicesDropdownOpen(false)}
-              >
-                <motion.div whileHover={{ x: 5 }}>Courses</motion.div>
-              </NavLink>
-              <NavLink
-                to="/services/mentorship"
-                className="block px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
-                onClick={() => setIsServicesDropdownOpen(false)}
-              >
-                <motion.div whileHover={{ x: 5 }}>Mentorship</motion.div>
-              </NavLink>
-            </motion.div>
-          )}
-        </div>
+        <NavLink
+          to="/services"
+          className={({ isActive }) =>
+            `nav-link ${isActive ? "active-nav-link" : ""}`
+          }
+        >
+          <p>Services</p>
+        </NavLink>
 
         {isAuthenticated ? (
           <div className="relative">
-            <motion.button
+            <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center justify-center w-11 h-11 rounded-full border border-gray-500 hover:bg-gray-100 transition overflow-hidden"
+              className="flex items-center justify-center w-11 h-11 rounded-full border border-gray-500 hover:bg-gray-100 transition"
               disabled={isLoggingOut}
               ref={profileButtonRef}
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              whileTap={{ scale: 0.95 }}
             >
               {user?.profilePhoto ? (
                 <img
@@ -170,30 +124,26 @@ const Navbar = () => {
                   className="w-full h-full rounded-full object-cover"
                 />
               )}
-            </motion.button>
+            </button>
 
             {isDropdownOpen && (
-              <motion.div
+              <div
                 ref={dropdownRef}
-                className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 overflow-hidden"
-                initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                transition={{ duration: 0.2 }}
+                className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
               >
                 <NavLink
                   to={`/${userType}/dashboard`}
                   className="block px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
                   onClick={() => setIsDropdownOpen(false)}
                 >
-                  <motion.div whileHover={{ x: 5 }}>Dashboard</motion.div>
+                  Dashboard
                 </NavLink>
                 <NavLink
                   to={`/support`}
                   className="block px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
                   onClick={() => setIsDropdownOpen(false)}
                 >
-                  <motion.div whileHover={{ x: 5 }}>Support</motion.div>
+                  Support
                 </NavLink>
                 <button
                   className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
@@ -203,41 +153,31 @@ const Navbar = () => {
                   }}
                   disabled={isLoggingOut}
                 >
-                  <motion.div whileHover={{ x: 5 }}>
-                    {isLoggingOut ? "Logging out..." : "Logout"}
-                  </motion.div>
+                  {isLoggingOut ? "Logging out..." : "Logout"}
                 </button>
-              </motion.div>
+              </div>
             )}
           </div>
         ) : (
           <>
-            <motion.button
+            <button
               className="text-gray-700 px-6 py-2 border border-gray-500 rounded-full hover:bg-gray-50 transition"
               onClick={() => {
                 setShowLogin(true);
                 setShowSignup(false);
               }}
-              whileHover={{ scale: 1.05, borderColor: "#2D7B67" }}
-              whileTap={{ scale: 0.95 }}
             >
               Login
-            </motion.button>
-            <motion.button
-              className="bg-gradient-to-r from-[#2D7B67] to-[#1F4C56] text-white px-6 py-2 rounded-full hover:shadow-lg transition relative overflow-hidden"
+            </button>
+            <button
+              className="bg-[#2D7B67] text-white px-6 py-2 rounded-full hover:bg-[#1F4C56] transition"
               onClick={() => {
                 setShowSignup(true);
                 setShowLogin(false);
               }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
             >
-              <motion.span
-                className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0"
-                whileHover={{ opacity: 0.3 }}
-              />
-              <span className="relative z-10">Sign Up</span>
-            </motion.button>
+              Sign Up
+            </button>
           </>
         )}
       </nav>
@@ -265,33 +205,62 @@ const Navbar = () => {
           />
         </div>
 
-        <div className="overflow-y-auto h-[calc(100%-80px)] px-6 py-4 flex flex-col gap-4 text-base font-medium">
-          <NavLink onClick={() => setShowMenu(false)} to="/">
-            <p className="py-2">Home</p>
+        <div className="overflow-y-auto h-[calc(100%-80px)] px-6 py-4 flex flex-col gap-2 text-base font-medium">
+          <NavLink 
+            onClick={() => setShowMenu(false)} 
+            to="/"
+            className="py-3 px-4 hover:bg-gray-100 rounded-lg transition"
+          >
+            Home
           </NavLink>
-          <NavLink onClick={() => setShowMenu(false)} to="/about">
-            <p className="py-2">About Us</p>
+          <NavLink 
+            onClick={() => setShowMenu(false)} 
+            to="/about"
+            className="py-3 px-4 hover:bg-gray-100 rounded-lg transition"
+          >
+            About Us
           </NavLink>
-          <NavLink onClick={() => setShowMenu(false)} to="/services">
-            <p className="py-2">Services</p>
-          </NavLink>
+          
+          {/* Services Section with Courses and Mentorship */}
+          <div className="py-2">
+            <p className="py-2 px-4 font-semibold text-gray-800">Services</p>
+            <div className="pl-4 flex flex-col gap-1">
+              <NavLink 
+                onClick={() => setShowMenu(false)} 
+                to="/services/courses"
+                className="py-2 px-4 hover:bg-gray-100 rounded-lg transition text-sm flex items-center gap-2"
+              >
+                <span className="text-[#2D7B67]">→</span> Courses
+              </NavLink>
+              <NavLink 
+                onClick={() => setShowMenu(false)} 
+                to="/services/mentorship"
+                className="py-2 px-4 hover:bg-gray-100 rounded-lg transition text-sm flex items-center gap-2"
+              >
+                <span className="text-[#2D7B67]">→</span> Mentorship
+              </NavLink>
+            </div>
+          </div>
 
           {isAuthenticated ? (
             <>
+              <div className="border-t my-2"></div>
               <NavLink
                 onClick={() => setShowMenu(false)}
                 to={`/${userType}/dashboard`}
+                className="py-3 px-4 hover:bg-gray-100 rounded-lg transition"
               >
-                <p className="py-2">Dashboard</p>
+                Dashboard
               </NavLink>
               <NavLink
                 onClick={() => setShowMenu(false)}
                 to={`/support`}
+                className="py-3 px-4 hover:bg-gray-100 rounded-lg transition"
               >
-                <p className="py-2">Support</p>
+                Support
               </NavLink>
               <button
-                className="text-left py-2 text-gray-700"
+                className="text-left py-3 px-4 text-red-600 hover:bg-red-50 rounded-lg transition"
                 onClick={() => {
                   handleLogout();
                   setShowMenu(false);
@@ -303,8 +272,9 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <div className="border-t my-2"></div>
               <button
-                className="text-gray-700 py-2 border border-gray-500 rounded-full w-full text-center"
+                className="text-gray-700 py-3 px-4 border-2 border-gray-500 rounded-full w-full text-center font-semibold hover:bg-gray-50 transition mt-2"
                 onClick={() => {
                   setShowLogin(true);
                   setShowSignup(false);
@@ -314,7 +284,7 @@ const Navbar = () => {
                 Login
               </button>
               <button
-                className="bg-[#2D7B67] text-white py-2 rounded-full w-full text-center"
+                className="bg-gradient-to-r from-[#2D7B67] to-[#1F4C56] text-white py-3 px-4 rounded-full w-full text-center font-semibold hover:shadow-lg transition"
                 onClick={() => {
                   setShowSignup(true);
                   setShowLogin(false);

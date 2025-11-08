@@ -133,7 +133,7 @@ const Card = ({ institute = defaultInstitute }) => {
         whileInView="animate"
         whileHover="hover"
         viewport={{ once: true, amount: 0.3 }}
-        className="w-full bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/20 border border-emerald-200/40 rounded-2xl shadow-lg overflow-hidden h-[28rem] sm:h-[30rem] flex flex-col relative preserve-3d"
+        className="w-full bg-gradient-to-br from-white via-emerald-50/30 to-teal-50/20 border border-emerald-200/40 rounded-2xl shadow-lg overflow-hidden min-h-[26rem] sm:h-[30rem] flex flex-col relative preserve-3d cursor-pointer"
         onClick={() => navigate(`/institute/overview/${normalizedInstitute.id}`)}
       >
         {/* Shimmer effect overlay */}
@@ -151,7 +151,7 @@ const Card = ({ institute = defaultInstitute }) => {
           style={{ pointerEvents: "none" }}
         />
       {/* Image Section */}
-      <div className="w-full h-48 sm:h-56 aspect-[4/3] p-3 relative overflow-hidden">
+      <div className="w-full h-44 sm:h-56 p-3 relative overflow-hidden flex-shrink-0">
         <motion.div
           className="absolute inset-0 bg-gradient-to-t from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
         />
@@ -169,50 +169,50 @@ const Card = ({ institute = defaultInstitute }) => {
       </div>
 
       {/* Content Section */}
-      <div className="flex-1 flex flex-col p-4 sm:p-5 space-y-3">
+      <div className="flex-1 flex flex-col p-3 sm:p-5 space-y-2 sm:space-y-3 min-h-0">
         {/* Title + Rating */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-base sm:text-lg font-semibold text-gray-900 group-hover:text-emerald-600 line-clamp-1">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <h2 className="text-sm sm:text-lg font-semibold text-gray-900 group-hover:text-emerald-600 line-clamp-2 sm:line-clamp-1 flex-1">
             {normalizedInstitute.name}
           </h2>
-          <div className="text-emerald-600">
+          <div className="text-emerald-600 flex-shrink-0">
             {renderStars(normalizedInstitute.rating)}
           </div>
         </div>
 
-        {/* Address + Tags */}
-        <div className="flex-1 flex items-start justify-between">
-          <div className="flex items-start gap-1.5 text-gray-700 max-w-[60%]">
-            <FaLocationDot className="text-emerald-600 w-4 h-4 sm:w-5 sm:h-5 shrink-0 mt-0.5" />
-            <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-tight">
-              {normalizedInstitute.address}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-1 max-w-[35%]">
-            {normalizedInstitute.tags.length > 0 ? (
-              normalizedInstitute.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-emerald-100 text-emerald-800 text-[0.65rem] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full hover:bg-emerald-200 transition whitespace-nowrap"
-                >
-                  {tag.length > 12 ? `${tag.slice(0, 12)}...` : tag}
-                </span>
-              ))
-            ) : (
-              <span className="text-gray-500 text-xs italic">No tags</span>
-            )}
-          </div>
+        {/* Address */}
+        <div className="flex items-start gap-1.5 text-gray-700">
+          <FaLocationDot className="text-emerald-600 w-3 h-3 sm:w-4 sm:h-4 shrink-0 mt-1" />
+          <p className="text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed flex-1">
+            {normalizedInstitute.address}
+          </p>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+          {normalizedInstitute.tags.length > 0 ? (
+            normalizedInstitute.tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-emerald-100 text-emerald-800 text-[0.65rem] sm:text-xs px-2 sm:px-2.5 py-1 rounded-full hover:bg-emerald-200 transition whitespace-nowrap"
+              >
+                {tag.length > 10 ? `${tag.slice(0, 10)}...` : tag}
+              </span>
+            ))
+          ) : (
+            <span className="text-gray-500 text-xs italic">No tags</span>
+          )}
         </div>
       </div>
 
       {/* Button Section */}
-      <div className="h-16 sm:h-20 flex items-center justify-center p-4 sm:p-5 pt-0">
+      <div className="flex items-center justify-center p-3 sm:p-5 pt-0 pb-4">
         <motion.button
           variants={button3D}
           initial="initial"
           whileHover="hover"
           whileTap="tap"
-          className="w-full max-w-48 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 sm:px-5 py-1.5 sm:py-2 rounded-lg text-sm sm:text-base font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl relative overflow-hidden preserve-3d"
+          className="w-full max-w-xs bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg text-sm sm:text-base font-medium flex items-center justify-center gap-2 shadow-md hover:shadow-xl relative overflow-hidden preserve-3d"
           onClick={(e) => {
             e.stopPropagation();
             navigate(`/institute/overview/${normalizedInstitute.id}`);
