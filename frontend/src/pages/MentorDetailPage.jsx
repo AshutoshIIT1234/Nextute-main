@@ -58,7 +58,7 @@ const MentorDetailPage = () => {
     const fetchMentor = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mentorship/mentors/${id}`);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || ''}/api/mentorship/mentors/${id}`);
         const data = await response.json();
         
         if (data.success) {
