@@ -1,0 +1,238 @@
+═══════════════════════════════════════════════════════════════
+  FIX FRONTEND NOT UPDATING - IMMEDIATE SOLUTION
+  VPS: 72.60.218.219
+═══════════════════════════════════════════════════════════════
+
+🚀 OPTION 1: AUTOMATED FIX (FASTEST)
+───────────────────────────────────────────────────────────────
+Run on your LOCAL machine:
+
+chmod +x fix-frontend-vps.sh
+./fix-frontend-vps.sh
+
+
+═══════════════════════════════════════════════════════════════
+
+🔧 OPTION 2: MANUAL FIX (Copy-paste these commands)
+───────────────────────────────────────────────────────────────
+
+STEP 1: Connect to VPS
+───────────────────────────────────────────────────────────────
+ssh root@72.60.218.219
+
+
+STEP 2: Navigate to project
+───────────────────────────────────────────────────────────────
+cd /root/Nextute-main
+
+
+STEP 3: Clean and rebuild frontend (COPY ALL AT ONCE)
+───────────────────────────────────────────────────────────────
+cd frontend && \
+rm -rf node_modules dist .vite && \
+cd .. && \
+git fetch origin && \
+git checkout origin/main -- frontend/ && \
+cd frontend && \
+npm install --force && \
+npm run build && \
+echo "✅ Frontend rebuilt successfully"
+
+
+STEP 4: Copy to nginx (if using nginx)
+───────────────────────────────────────────────────────────────
+sudo cp -r dist/* /var/www/nextute/
+sudo systemctl restart nginx
+
+
+STEP 5: Restart PM2
+───────────────────────────────────────────────────────────────
+cd ..
+pm2 restart all
+
+
+STEP 6: Clear caches
+───────────────────────────────────────────────────────────────
+sudo rm -rf /var/cache/nginx/*
+pm2 flush
+
+
+═══════════════════════════════════════════════════════════════
+
+🔍 VERIFY FRONTEND IS UPDATED
+───────────────────────────────────────────────────────────────
+
+# Check build date (should be recent)
+ls -lh frontend/dist/index.html
+
+# Check if files copied to nginx
+ls -lh /var/www/nextute/index.html
+
+# Check PM2 status
+pm2 status
+
+
+═══════════════════════════════════════════════════════════════
+
+🌐 CHECK WEBSITE (IMPORTANT!)
+───────────────────────────────────────────────────────────────
+
+⚠️  YOU MUST CLEAR YOUR BROWSER CACHE! ⚠️
+
+Method 1: Hard Refresh
+───────────────────────────────────────────────────────────────
+Windows: Ctrl + Shift + R  (or Ctrl + F5)
+Mac:     Cmd + Shift + R
+
+
+Method 2: Clear Browser Cache
+───────────────────────────────────────────────────────────────
+Chrome/Edge:
+  1. Press Ctrl+Shift+Delete
+  2. Select "Cached images and files"
+  3. Click "Clear data"
+
+Firefox:
+  1. Press Ctrl+Shift+Delete
+  2. Select "Cache"
+  3. Click "Clear Now"
+
+
+Method 3: Use Incognito/Private Mode
+───────────────────────────────────────────────────────────────
+Chrome/Edge: Ctrl + Shift + N
+Firefox:     Ctrl + Shift + P
+Safari:      Cmd + Shift + N
+
+
+═══════════════════════════════════════════════════════════════
+
+✅ WHAT TO CHECK ON WEBSITE
+───────────────────────────────────────────────────────────────
+
+1. Visit: https://www.nextute.com
+2. Go to Mentorship page
+3. Check pricing displays:
+
+   Pro Plan should show:
+   ₹1,500 (strikethrough) → ₹1,000
+   🎉 Early Bird Offer badge
+
+   Premium Plan should show:
+   ₹1,999 (strikethrough) → ₹1,499
+   🎉 Early Bird Offer badge
+
+4. Check Testimonials section - should loop infinitely
+
+
+═══════════════════════════════════════════════════════════════
+
+🔧 STILL NOT WORKING? TRY THIS
+───────────────────────────────────────────────────────────────
+
+# Force rebuild with cache clear
+ssh root@72.60.218.219
+
+cd /root/Nextute-main/frontend
+rm -rf node_modules dist .vite package-lock.json
+npm cache clean --force
+npm install
+npm run build
+
+# If using nginx
+sudo rm -rf /var/www/nextute/*
+sudo cp -r dist/* /var/www/nextute/
+sudo systemctl restart nginx
+
+# Restart everything
+cd ..
+pm2 delete all
+pm2 start ecosystem.config.js
+pm2 save
+
+
+═══════════════════════════════════════════════════════════════
+
+🐛 TROUBLESHOOTING
+───────────────────────────────────────────────────────────────
+
+Problem: Build succeeds but website not updating
+Solution: 
+  1. Clear browser cache (Ctrl+Shift+Delete)
+  2. Hard refresh (Ctrl+Shift+R)
+  3. Try incognito mode
+
+Problem: "npm run build" fails
+Solution:
+  cd frontend
+  rm -rf node_modules package-lock.json
+  npm install
+  npm run build
+
+Problem: Nginx not serving new files
+Solution:
+  sudo cp -r frontend/dist/* /var/www/nextute/
+  sudo systemctl restart nginx
+  sudo rm -rf /var/cache/nginx/*
+
+Problem: PM2 not restarting
+Solution:
+  pm2 delete all
+  pm2 start ecosystem.config.js
+  pm2 save
+
+
+═══════════════════════════════════════════════════════════════
+
+📊 CHECK THESE FILES ON VPS
+───────────────────────────────────────────────────────────────
+
+# These files should have recent timestamps:
+ls -lh frontend/dist/index.html
+ls -lh frontend/dist/assets/*.js
+
+# If using nginx, these should match:
+ls -lh /var/www/nextute/index.html
+ls -lh /var/www/nextute/assets/*.js
+
+
+═══════════════════════════════════════════════════════════════
+
+💡 KEY POINTS
+───────────────────────────────────────────────────────────────
+
+1. Frontend must be REBUILT: npm run build
+2. If using nginx, files must be COPIED to /var/www/nextute/
+3. Nginx must be RESTARTED: sudo systemctl restart nginx
+4. Browser cache must be CLEARED: Ctrl+Shift+R
+5. PM2 must be RESTARTED: pm2 restart all
+
+
+═══════════════════════════════════════════════════════════════
+
+🆘 EMERGENCY: COMPLETE FRONTEND RESET
+───────────────────────────────────────────────────────────────
+
+ssh root@72.60.218.219
+cd /root/Nextute-main
+
+# Nuclear option - complete reset
+rm -rf frontend
+git checkout origin/main -- frontend/
+cd frontend
+npm install
+npm run build
+sudo cp -r dist/* /var/www/nextute/
+sudo systemctl restart nginx
+cd ..
+pm2 restart all
+
+
+═══════════════════════════════════════════════════════════════
+
+After running any of these, ALWAYS:
+1. Clear browser cache
+2. Hard refresh (Ctrl+Shift+R)
+3. Or use incognito mode
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,77 @@
+╔══════════════════════════════════════════════════════════════╗
+║           NEXTUTE VPS DEPLOYMENT - QUICK REFERENCE           ║
+╚══════════════════════════════════════════════════════════════╝
+
+📦 WHAT'S BEING DEPLOYED:
+  ✅ Testimonial infinite loop
+  ✅ Email OTP improvements + logging
+  ✅ 403 error fixes
+  ✅ Calendly links (Shubhomoy: one-one-mentorship-clone)
+  ✅ Early Bird Pricing: Pro ₹1,000 | Premium ₹1,499
+  ✅ Debug endpoints
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 FASTEST DEPLOYMENT (Using Git):
+
+ssh user@vps-ip
+cd /path/to/Nextute-main
+cp -r . ../backup-$(date +%Y%m%d)
+git pull origin main
+cd backend && npm install && npx prisma db push && node prisma/seed-mentors.js
+cd ../frontend && npm install && npm run build
+pm2 restart all
+pm2 logs backend --lines 20
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ VERIFY DEPLOYMENT:
+
+curl http://localhost:8080/test
+pm2 status
+pm2 logs backend --lines 50
+# Visit: https://www.nextute.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔄 ROLLBACK (If needed):
+
+pm2 stop all
+cd /path/to
+rm -rf Nextute-main
+mv backup-YYYYMMDD Nextute-main
+cd Nextute-main && pm2 restart all
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📊 MONITORING:
+
+pm2 logs backend          # View logs
+pm2 monit                 # Monitor resources
+pm2 restart backend       # Restart if needed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 IMPORTANT FILES:
+  • DEPLOY_TO_VPS.md - Detailed steps
+  • deploy.sh - Automated script
+  • PRE_DEPLOYMENT_CHECKLIST.md - Full checklist
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️  BEFORE DEPLOYING:
+  □ Backup current version
+  □ Verify .env variables
+  □ Test locally
+  □ Read deployment guide
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 SUCCESS CRITERIA:
+  ✓ pm2 status shows "online"
+  ✓ No errors in logs
+  ✓ Website loads
+  ✓ New pricing visible
+  ✓ OTP emails working
+
+╚══════════════════════════════════════════════════════════════╝

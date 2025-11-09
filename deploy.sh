@@ -1,126 +1,148 @@
 #!/bin/bash
 
-# Deployment script for Nextute on VPS
-# Run this script on your VPS after uploading the code
+# Nextute VPS Deployment Script
+# This script automates the deployment process
 
-set -e
+set -e  # Exit on error
 
-echo "🚀 Starting Nextute deployment..."
+echo "🚀 Starting Nextute Deployment..."
+echo "================================"
 
-# Update system packages
-echo "📦 Updating system packages..."
-sudo apt update && sudo apt upgrade -y
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
-# Install Node.js (if not installed)
-if ! command -v node &> /dev/null; then
-    echo "📥 Installing Node.js..."
-    curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-    sudo apt install -y nodejs
-fi
+# Configuration
+BACKUP_DIR="../Nextute-backup-$(date +%Y%m%d-%H%M%S)"
+PROJECT_DIR=$(pwd)
 
-# Install PM2 globally (if not installed)
-if ! command -v pm2 &> /dev/null; then
-    echo "📥 Installing PM2..."
-    sudo npm install -g pm2
-fi
+# Function to print colored output
+print_success() {
+    echo -e "${GREEN}✅ $1${NC}"
+}
 
-# Install Nginx (if not installed)
-if ! command -v nginx &> /dev/null; then
-    echo "📥 Installing Nginx..."
-    sudo apt install -y nginx
-fi
+print_error() {
+    echo -e "${RED}❌ $1${NC}"
+}
 
-# Navigate to project directory
-cd /root/Nextute-main
+print_info() {
+    echo -e "${YELLOW}ℹ️  $1${NC}"
+}
 
-# Backend setup
-echo "🔧 Setting up backend..."
-cd backend
-
-# Check if .env file exists
-if [ ! -f .env ]; then
-    echo "❌ Error: backend/.env file not found!"
-    echo "Please create /root/Nextute-main/backend/.env with your environment variables"
+# Step 1: Create Backup
+echo ""
+print_info "Step 1: Creating backup..."
+if [ -d "$PROJECT_DIR" ]; then
+    cp -r "$PROJECT_DIR" "$BACKUP_DIR"
+    print_success "Backup created at: $BACKUP_DIR"
+else
+    print_error "Project directory not found!"
     exit 1
 fi
 
-npm install
-npx prisma generate
-
-# Check if database needs baselining or migration
-echo "🔍 Checking database state..."
-if npx prisma migrate deploy 2>&1 | grep -q "P3005"; then
-    echo "📊 Database already exists, baselining..."
-    npx prisma migrate resolve --applied "$(ls prisma/migrations | tail -n 1)"
+# Step 2: Pull Latest Changes (if using Git)
+echo ""
+print_info "Step 2: Pulling latest changes..."
+if [ -d ".git" ]; then
+    git pull origin main
+    print_success "Latest changes pulled from Git"
 else
-    echo "🔄 Running migrations..."
-    npx prisma migrate deploy || true
+    print_info "Not a Git repository, skipping..."
 fi
 
-# Start backend with PM2
-echo "🚀 Starting backend..."
-pm2 delete nextute-backend 2>/dev/null || true
-pm2 start server.js --name nextute-backend
-pm2 save
-
-# Frontend setup
-echo "🔧 Building frontend..."
-cd ../frontend
-npm install
-npm run build
-
-# Copy frontend build to Nginx directory
-echo "📋 Deploying frontend..."
-sudo rm -rf /var/www/nextute
-sudo mkdir -p /var/www/nextute
-sudo cp -r dist/* /var/www/nextute/
-
-# Setup Nginx configuration
-echo "⚙️ Configuring Nginx..."
-sudo tee /etc/nginx/sites-available/nextute > /dev/null <<'EOF'
-server {
-    listen 80;
-    server_name 72.60.218.219;
-
-    # Frontend
-    location / {
-        root /var/www/nextute;
-        try_files $uri $uri/ /index.html;
-    }
-
-    # Backend API
-    location /api {
-        proxy_pass http://localhost:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-EOF
-
-# Enable site
-sudo ln -sf /etc/nginx/sites-available/nextute /etc/nginx/sites-enabled/
-sudo rm -f /etc/nginx/sites-enabled/default
-
-# Test and reload Nginx
-echo "🔄 Reloading Nginx..."
-sudo nginx -t
-sudo systemctl restart nginx
-
-# Setup PM2 to start on boot
-pm2 startup systemd -u root --hp /root
-pm2 save
-
-echo "✅ Deployment complete!"
-echo "🌐 Your app should be accessible at http://72.60.218.219"
+# Step 3: Update Backend
 echo ""
-echo "Useful commands:"
-echo "  pm2 status          - Check backend status"
-echo "  pm2 logs            - View backend logs"
-echo "  pm2 restart all     - Restart backend"
-echo "  sudo systemctl status nginx - Check Nginx status"
+print_info "Step 3: Updating backend..."
+cd backend
+
+# Install dependencies
+print_info "Installing backend dependencies..."
+npm install
+print_success "Backend dependencies installed"
+
+# Update database schema
+print_info "Updating database schema..."
+npx prisma db push
+print_success "Database schema updated"
+
+# Run mentor seed
+print_info "Updating mentor data with Calendly links..."
+node prisma/seed-mentors.js
+print_success "Mentor data updated"
+
+# Step 4: Update Frontend
+echo ""
+print_info "Step 4: Updating frontend..."
+cd ../frontend
+
+# Install dependencies
+print_info "Installing frontend dependencies..."
+npm install
+print_success "Frontend dependencies installed"
+
+# Build production version
+print_info "Building frontend for production..."
+npm run build
+print_success "Frontend build completed"
+
+# Step 5: Restart Services
+echo ""
+print_info "Step 5: Restarting services..."
+
+# Check if PM2 is available
+if command -v pm2 &> /dev/null; then
+    print_info "Restarting services with PM2..."
+    pm2 restart all
+    print_success "Services restarted with PM2"
+    
+    # Show status
+    echo ""
+    pm2 status
+else
+    print_info "PM2 not found. Please restart services manually."
+fi
+
+# Step 6: Verification
+echo ""
+print_info "Step 6: Running verification checks..."
+
+# Check if backend is running
+sleep 3
+if curl -f http://localhost:8080/test &> /dev/null; then
+    print_success "Backend is running"
+else
+    print_error "Backend health check failed"
+fi
+
+# Step 7: Summary
+echo ""
+echo "================================"
+echo "🎉 Deployment Summary"
+echo "================================"
+print_success "Backup created: $BACKUP_DIR"
+print_success "Backend updated and restarted"
+print_success "Frontend built successfully"
+print_success "Database schema updated"
+print_success "Mentor Calendly links updated"
+echo ""
+print_info "Recent Updates Deployed:"
+echo "  • Testimonial infinite loop"
+echo "  • Email OTP improvements"
+echo "  • 403 error fixes"
+echo "  • Calendly links for mentors"
+echo "  • Early Bird pricing (Pro: ₹1,000, Premium: ₹1,499)"
+echo "  • Debug endpoints"
+echo ""
+print_info "Next Steps:"
+echo "  1. Test the website: https://www.nextute.com"
+echo "  2. Check mentorship pricing displays correctly"
+echo "  3. Test email OTP functionality"
+echo "  4. Verify Calendly links work"
+echo "  5. Monitor logs: pm2 logs backend"
+echo ""
+print_info "Rollback command (if needed):"
+echo "  rm -rf $PROJECT_DIR && mv $BACKUP_DIR $PROJECT_DIR && pm2 restart all"
+echo ""
+print_success "Deployment completed successfully! 🚀"

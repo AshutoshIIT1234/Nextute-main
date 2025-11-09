@@ -31,7 +31,7 @@ const MentorDetailPage = () => {
   };
 
   const handlePlanSelect = (planType) => {
-    const price = planType === 'premium' ? 201 : 101;
+    const price = planType === 'premium' ? 1499 : 1000;
 
     const mentorData = {
       id: mentor.id,
