@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { AppContext } from "../context/AppContext";
 import useRazorpay from "../hooks/useRazorpay";
 import toast from "react-hot-toast";
+import { getMentorImage } from "../utils/mentorImages";
 
 const MentorDetailPage = () => {
   const { id } = useParams();
@@ -50,7 +51,50 @@ const MentorDetailPage = () => {
     initiateMentorshipPayment(mentorData, studentData);
   };
 
-  // Dummy mentor data - will be replaced with API call later
+  const [loading, setLoading] = useState(true);
+
+  // Fetch mentor from API
+  useEffect(() => {
+    const fetchMentor = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/mentorship/mentors/${id}`);
+        const data = await response.json();
+        
+        if (data.success) {
+          // Map backend data to frontend format with defaults
+          const mentorData = {
+            id: data.mentor.id,
+            name: data.mentor.name,
+            expertise: data.mentor.expertise,
+            achievement: data.mentor.rank || "Top Ranker",
+            students: data.mentor.studentsCount || 0,
+            image: getMentorImage(data.mentor.id, data.mentor.name), // Use hardcoded images
+            shortDescription: data.mentor.description || "Expert mentor ready to guide you.",
+            detailedDescription: data.mentor.description || "Experienced mentor with proven track record of helping students achieve their goals.",
+           
+            subjects: data.mentor.subjects || [],
+            availability: "Flexible timings",
+            sessionPrice: "₹500/hour"
+          };
+          setMentor(mentorData);
+        } else {
+          toast.error('Mentor not found');
+        }
+      } catch (error) {
+        console.error('Error fetching mentor:', error);
+        toast.error('Failed to load mentor details');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchMentor();
+    }
+  }, [id]);
+
+  // Fallback dummy data
   const mentorsData = [
     {
       id: 1,
@@ -194,10 +238,18 @@ const MentorDetailPage = () => {
     }
   ];
 
-  useEffect(() => {
-    const foundMentor = mentorsData.find(m => m.id === parseInt(id));
-    setMentor(foundMentor);
-  }, [id]);
+  if (loading) {
+    return (
+      <div className="w-full min-h-screen">
+        <Navbar />
+        <div className="max-w-4xl mx-auto px-4 py-20 text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-[#2D7B67] mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading mentor details...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!mentor) {
     return (

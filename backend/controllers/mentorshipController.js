@@ -96,3 +96,88 @@ export const verifyMentorshipPayment = async (req, res) => {
     });
   }
 };
+
+// Get all mentors
+export const getAllMentors = async (req, res) => {
+  try {
+    const { filter } = req.query;
+
+    let mentors = await prisma.mentor.findMany({
+      select: {
+        id: true,
+        name: true,
+        expertise: true,
+        description: true,
+        image: true,
+        studentsCount: true,
+        rating: true,
+        isAvailable: true,
+      },
+      where: {
+        isAvailable: true,
+      },
+      orderBy: {
+        studentsCount: 'desc',
+      },
+    });
+
+    // Apply filter if provided
+    if (filter && filter !== 'all') {
+      if (filter === 'iit') {
+        mentors = mentors.filter(m => m.expertise.toLowerCase().includes('iit'));
+      } else if (filter === 'neet') {
+        mentors = mentors.filter(m => 
+          m.expertise.toLowerCase().includes('aiims') || 
+          m.expertise.toLowerCase().includes('jipmer') ||
+          m.expertise.toLowerCase().includes('afmc') ||
+          m.expertise.toLowerCase().includes('mamc') ||
+          m.expertise.toLowerCase().includes('kgmu') ||
+          m.expertise.toLowerCase().includes('mbbs')
+        );
+      }
+    }
+
+    res.status(200).json({
+      success: true,
+      mentors,
+      count: mentors.length,
+    });
+  } catch (error) {
+    console.error('Error fetching mentors:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch mentors',
+      error: error.message,
+    });
+  }
+};
+
+// Get mentor by ID
+export const getMentorById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const mentor = await prisma.mentor.findUnique({
+      where: { id: parseInt(id) },
+    });
+
+    if (!mentor) {
+      return res.status(404).json({
+        success: false,
+        message: 'Mentor not found',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      mentor,
+    });
+  } catch (error) {
+    console.error('Error fetching mentor:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to fetch mentor',
+      error: error.message,
+    });
+  }
+};

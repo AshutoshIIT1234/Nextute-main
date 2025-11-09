@@ -120,6 +120,31 @@ model Employee {
   updated_at      DateTime @default(now()) @updatedAt
 }
 
+model Mentor {
+  id                       Int       @id @default(autoincrement())
+  name                     String
+  email                    String    @unique
+  expertise                String
+  description              String?
+  image                    String?
+  studentsCount            Int       @default(0) @map("students_count")
+  rating                   Float     @default(4.5)
+  isAvailable              Boolean   @default(true) @map("is_available")
+  contactNumber            String?   @map("contact_number")
+  alternativeContactNumber String?   @map("alternative_contact_number")
+  gender                   String?
+  dateOfBirth              DateTime? @map("date_of_birth")
+  course                   String?
+  instituteName            String?   @map("institute_name")
+  rank                     String?
+  major                    String?
+  subjects                 String[]  @default([])
+  createdAt                DateTime  @default(now()) @map("created_at")
+  updatedAt                DateTime  @updatedAt @map("updated_at")
+
+  @@map("mentors")
+}
+
 model Job {
   id           String   @id @default(uuid()) @db.Uuid
   job_id       String   @unique @db.VarChar(10)

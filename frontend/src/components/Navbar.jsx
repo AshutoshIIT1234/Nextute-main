@@ -17,15 +17,19 @@ const Navbar = () => {
   } = useContext(AppContext);
 
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
   const location = useLocation();
 
   const dropdownRef = useRef(null);
   const profileButtonRef = useRef(null);
+  const servicesDropdownRef = useRef(null);
+  const servicesButtonRef = useRef(null);
 
   useEffect(() => {
     setIsDropdownOpen(false);
+    setIsServicesDropdownOpen(false);
     setShowMenu(false);
   }, [location]);
 
@@ -38,6 +42,14 @@ const Navbar = () => {
         !profileButtonRef.current.contains(event.target)
       ) {
         setIsDropdownOpen(false);
+      }
+      if (
+        servicesDropdownRef.current &&
+        !servicesDropdownRef.current.contains(event.target) &&
+        servicesButtonRef.current &&
+        !servicesButtonRef.current.contains(event.target)
+      ) {
+        setIsServicesDropdownOpen(false);
       }
     };
 
@@ -94,14 +106,46 @@ const Navbar = () => {
         >
           <p>About Us</p>
         </NavLink>
-        <NavLink
-          to="/services"
-          className={({ isActive }) =>
-            `nav-link ${isActive ? "active-nav-link" : ""}`
-          }
-        >
-          <p>Services</p>
-        </NavLink>
+        
+        {/* Services Dropdown */}
+        <div className="relative">
+          <button
+            ref={servicesButtonRef}
+            onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+            className="nav-link flex items-center gap-1"
+          >
+            <p>Services</p>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          {isServicesDropdownOpen && (
+            <motion.div
+              ref={servicesDropdownRef}
+              className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 overflow-hidden"
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <NavLink
+                to="/services/courses"
+                className="block px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
+                onClick={() => setIsServicesDropdownOpen(false)}
+              >
+                <motion.div whileHover={{ x: 5 }}>Courses</motion.div>
+              </NavLink>
+              <NavLink
+                to="/services/mentorship"
+                className="block px-4 py-2 text-gray-700 hover:bg-[#2D7B67] hover:text-white transition"
+                onClick={() => setIsServicesDropdownOpen(false)}
+              >
+                <motion.div whileHover={{ x: 5 }}>Mentorship</motion.div>
+              </NavLink>
+            </motion.div>
+          )}
+        </div>
 
         {isAuthenticated ? (
           <div className="relative">

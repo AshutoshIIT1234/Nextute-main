@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { AppContext } from "../context/AppContext";
 import useRazorpay from "../hooks/useRazorpay";
 import toast from "react-hot-toast";
+import axios from "axios";
+import { getMentorImage } from "../utils/mentorImages";
 
 const MentorshipComingSoon = () => {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ const MentorshipComingSoon = () => {
   const [showPricingModal, setShowPricingModal] = useState(false);
   const [selectedMentor, setSelectedMentor] = useState(null);
   const [filter, setFilter] = useState('all');
+  const [mentors, setMentors] = useState([]);
+  const [loading, setLoading] = useState(true);
   
   const handleBookClick = (mentor) => {
     if (!isAuthenticated) {
@@ -50,9 +54,41 @@ const MentorshipComingSoon = () => {
     setShowPricingModal(false);
     initiateMentorshipPayment(mentorData, studentData);
   };
-  
-  // Dummy mentor data - will be replaced with API call later
-  const allMentors = [
+
+  // Fetch mentors from API
+  useEffect(() => {
+    const fetchMentors = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/mentorship/mentors?filter=${filter}`);
+        
+        if (response.data.success) {
+          // Map backend data to frontend format with hardcoded images
+          const formattedMentors = response.data.mentors.map(mentor => ({
+            id: mentor.id,
+            name: mentor.name,
+            expertise: mentor.expertise,
+            students: mentor.studentsCount || 0,
+            image: getMentorImage(mentor.id, mentor.name), // Use hardcoded images
+            description: mentor.description || "Expert mentor ready to guide you to success.",
+          }));
+          setMentors(formattedMentors);
+        }
+      } catch (error) {
+        console.error('Error fetching mentors:', error);
+        toast.error('Failed to load mentors');
+        // Fallback to dummy data if API fails
+        setMentors(dummyMentors);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMentors();
+  }, [filter]);
+
+  // Fallback dummy mentor data
+  const dummyMentors = [
     {
       id: 1,
       name: "Arjun Verma",
@@ -134,13 +170,6 @@ const MentorshipComingSoon = () => {
       description: "King George's Medical University student. Guides on NEET preparation and stress management."
     }
   ];
-
-  // Filter mentors based on selected filter
-  const mentors = filter === 'all' 
-    ? allMentors 
-    : filter === 'iit'
-    ? allMentors.filter(m => m.expertise.includes('IIT'))
-    : allMentors.filter(m => m.expertise.includes('AIIMS') || m.expertise.includes('JIPMER') || m.expertise.includes('AFMC') || m.expertise.includes('MAMC') || m.expertise.includes('KGMU'));
 
   return (
     <div className="w-full min-h-screen bg-background">
@@ -228,13 +257,23 @@ const MentorshipComingSoon = () => {
         </motion.div>
 
         {/* Mentors Grid */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
-        >
-          {mentors.map((mentor, index) => (
+        {loading ? (
+          <div className="flex justify-center items-center py-20">
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary"></div>
+          </div>
+        ) : mentors.length === 0 ? (
+          <div className="text-center py-20">
+            <p className="text-2xl text-gray-600 mb-4">No mentors available at the moment</p>
+            <p className="text-gray-500">Please check back later</p>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+          >
+            {mentors.map((mentor, index) => (
             <motion.div
               key={mentor.id}
               initial={{ opacity: 0, y: 20, rotateX: -15 }}
@@ -331,7 +370,8 @@ const MentorshipComingSoon = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+          </motion.div>
+        )}
 
         {/* Benefits Section */}
         <motion.div
