@@ -35,7 +35,7 @@ const MentorshipComingSoon = () => {
   };
 
   const handlePlanSelect = (planType) => {
-    const price = planType === 'premium' ? 1500 : 1000;
+    const price = planType === 'premium' ? 201 : 101;
 
     const mentorData = {
       id: selectedMentor.id,
@@ -341,8 +341,8 @@ const MentorshipComingSoon = () => {
                   </div>
                   
                   <div className="flex items-center justify-between text-sm mb-4 pb-4 border-b">
-                    <span className="text-gray-500">Starting from</span>
-                    <span className="text-2xl font-bold text-primary">₹1,000</span>
+                 
+                   
                   </div>
                 </div>
                 
@@ -386,7 +386,7 @@ const MentorshipComingSoon = () => {
           <p className="text-center text-gray-600 mb-10 max-w-2xl mx-auto">
             Join thousands of students who have transformed their preparation with personalized guidance from top rankers
           </p>
-          <div className="grid md:grid-cols-4 gap-6">
+          <div className="grid md:grid-cols-5 gap-6">
             <motion.div 
               whileHover={{ 
                 scale: 1.05, 
@@ -414,6 +414,20 @@ const MentorshipComingSoon = () => {
               <div className="text-5xl mb-3" style={{ transform: "translateZ(20px)" }}>🎯</div>
               <h3 className="font-bold text-lg mb-2">Proven Strategies</h3>
               <p className="text-gray-600 text-sm">Learn techniques that actually worked for toppers</p>
+            </motion.div>
+            <motion.div 
+              whileHover={{ 
+                scale: 1.05, 
+                rotateY: 5,
+                rotateX: 5,
+                transition: { duration: 0.3 }
+              }}
+              style={{ transformStyle: "preserve-3d" }}
+              className="bg-white p-6 rounded-xl shadow-md hover:shadow-xl transition-all text-center"
+            >
+              <div className="text-5xl mb-3" style={{ transform: "translateZ(20px)" }}>📚</div>
+              <h3 className="font-bold text-lg mb-2">Expected PYQ</h3>
+              <p className="text-gray-600 text-sm">Access to previous year questions and predictions</p>
             </motion.div>
             <motion.div 
               whileHover={{ 
@@ -602,40 +616,53 @@ const MentorshipComingSoon = () => {
                     <div className="inline-block p-3 bg-primary rounded-full mb-4">
                       <span className="text-3xl">🎯</span>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Pro Plan</h3>
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2">Smart Guidance </h3>
                     <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold text-primary">₹1,000</span>
+                      <span className="text-4xl font-bold text-primary">₹101</span>
                       <span className="text-gray-500">/session</span>
                     </div>
-                    <p className="text-sm text-gray-600">Perfect for focused learning</p>
+                    <p className="text-sm text-gray-600">Get mentored by IITians/AIIMS students who’ve been exactly where you are now!
+</p>
                   </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
                       <span className="text-green-500 text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">1 Hour Session</span>
-                        <span className="text-xs text-gray-500">Focused mentoring time</span>
+                        <span className="font-semibold block">2 Hours of Mentorship Session with IIT/AIIMS mentors.
+</span>
+                       
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-green-500 text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">Doubt Clearing</span>
-                        <span className="text-xs text-gray-500">Get all your questions answered</span>
+                        <span className="font-semibold block">General Exam Strategy: Learn the right approach for JEE/NEET from toppers.
+</span>
+                      
+                      </div>
+                    </li>
+                     <li className="flex items-start gap-3">
+                      <span className="text-green-500 text-2xl flex-shrink-0">✓</span>
+                      <div>
+                        <span className="font-semibold block">Expected PYQs with Solutions: Handpicked questions likely to appear in upcoming exams, curated by top mentors by the end of the month .
+
+</span>
+                      
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-green-500 text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">Study Material</span>
-                        <span className="text-xs text-gray-500">Curated resources</span>
+                        <span className="font-semibold block">Smart Study Techniques: Learn how to cover syllabus effectively and manage time.</span>
+                       
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-green-500 text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">Email Support</span>
-                        <span className="text-xs text-gray-500">Follow-up questions via email</span>
+                        <span className="font-semibold block"> Live Q&A: Clear all your doubts in real-time.
+</span>
+                       
                       </div>
                     </li>
                   </ul>
@@ -643,7 +670,7 @@ const MentorshipComingSoon = () => {
                     onClick={() => handlePlanSelect('pro')}
                     className="w-full bg-primary text-white py-4 rounded-xl hover:bg-secondary transition-all font-bold text-lg shadow-lg hover:shadow-xl"
                   >
-                    Choose Pro Plan →
+                    Choose Smart Guidance Plan →
                   </button>
                 </motion.div>
 
@@ -674,47 +701,54 @@ const MentorshipComingSoon = () => {
                     <div className="inline-block p-3 bg-white/20 backdrop-blur rounded-full mb-4">
                       <span className="text-3xl">👑</span>
                     </div>
-                    <h3 className="text-2xl font-bold mb-2">Premium Plan</h3>
+                    <h3 className="text-2xl font-bold mb-2">Personalised Success Plan</h3>
                     <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold">₹1,500</span>
+                      <span className="text-4xl font-bold">₹201</span>
                       <span className="text-white/70">/session</span>
                     </div>
-                    <p className="text-sm text-white/80">Complete mentorship experience</p>
+                    <p className="text-sm text-white/80">
+Your personal mentor from IIT/AIIMS will help you design a strategy built just for you.
+</p>
                   </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
                       <span className="text-accent text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">1.5 Hour Session</span>
-                        <span className="text-xs text-white/70">Extended learning time</span>
+                        <span className="font-semibold block">2 Hours of One-on-One Mentorship (Personalized).
+</span>
+                      
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-accent text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">Personalized Study Plan</span>
-                        <span className="text-xs text-white/70">Custom roadmap for success</span>
+                        <span className="font-semibold block">Custom Study Planner: Get your daily & weekly schedule built according to your syllabus, weak areas & time availability.
+</span>
+                        
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-accent text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">Premium Study Material</span>
-                        <span className="text-xs text-white/70">Exclusive resources</span>
+                        <span className="font-semibold block">Personalised Strategy & Target Setting: Monthly targets & review plan to keep you on track.
+</span>
+                       
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-accent text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">WhatsApp Support (7 days)</span>
-                        <span className="text-xs text-white/70">Direct mentor access</span>
+                        <span className="font-semibold block">Expected PYQs with Complete Solutions: Get exclusive question sets likely to appear in the exam by the end of the month.
+</span>
+                       
                       </div>
                     </li>
                     <li className="flex items-start gap-3">
                       <span className="text-accent text-2xl flex-shrink-0">✓</span>
                       <div>
-                        <span className="font-semibold block">Follow-up Session</span>
-                        <span className="text-xs text-white/70">Track your progress</span>
+                        <span className="font-semibold block">Performance Analysis & Improvement Tips: Mentor evaluates your learning pattern and suggests specific improvements.
+</span>
+                       
                       </div>
                     </li>
                   </ul>
@@ -722,7 +756,7 @@ const MentorshipComingSoon = () => {
                     onClick={() => handlePlanSelect('premium')}
                     className="w-full bg-white text-secondary py-4 rounded-xl hover:bg-accent/20 transition-all font-bold text-lg shadow-lg hover:shadow-xl"
                   >
-                    Choose Premium Plan →
+                    Choose Personalised Success Plan  →
                   </button>
                 </motion.div>
               </div>

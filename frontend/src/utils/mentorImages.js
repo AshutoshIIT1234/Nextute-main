@@ -1,13 +1,16 @@
 // Mentor image mappings
 import mentor1 from '../assets/mentor1.jpg';
+import mentor3 from '../assets/mentor3.jpg';
+import mentor4 from '../assets/mentor4.jpg';
+import mentor9 from '../assets/mentor9.jpg';
 
 // Add your mentor images here
 export const mentorImages = {
-  1: mentor1, // Gopal Gurjar - using local image
-  2: "https://ui-avatars.com/api/?name=Priya+Malhotra&background=8B5CF6&color=fff&size=400",
-  3: "https://ui-avatars.com/api/?name=Rohan+Kapoor&background=3B82F6&color=fff&size=400",
-  4: "https://ui-avatars.com/api/?name=Ananya+Singh&background=EC4899&color=fff&size=400",
-  5: "https://ui-avatars.com/api/?name=Karan+Sharma&background=F59E0B&color=fff&size=400",
+  1: mentor1, // Gopal Gurjar
+  2: mentor3, // Shubhomoy Dey
+  3: mentor4, // Likhitha
+  4: mentor9, // Karan Garg
+  5: "https://ui-avatars.com/api/?name=Mentor&background=F59E0B&color=fff&size=400",
   // Add more mentor IDs and their image URLs or imports
 };
 

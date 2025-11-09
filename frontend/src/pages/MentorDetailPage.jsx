@@ -31,7 +31,7 @@ const MentorDetailPage = () => {
   };
 
   const handlePlanSelect = (planType) => {
-    const price = planType === 'premium' ? 1500 : 1000;
+    const price = planType === 'premium' ? 201 : 101;
 
     const mentorData = {
       id: mentor.id,
@@ -331,27 +331,29 @@ const MentorDetailPage = () => {
           </div>
         </motion.div>
 
-        {/* Introduction Video */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white rounded-2xl shadow-lg p-8 mb-8"
-        >
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Introduction Video</h2>
-          <div className="aspect-video rounded-lg overflow-hidden">
-            <iframe
-              width="100%"
-              height="100%"
-              src={mentor.videoUrl}
-              title={`${mentor.name} Introduction`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+        {/* Introduction Video - Hidden for Likhitha (ID 3) */}
+        {mentor.id !== 3 && mentor.id !== "3" && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+          >
+            <h2 className="text-2xl font-bold text-gray-800 mb-4">Introduction Video</h2>
+            <div className="aspect-video rounded-lg overflow-hidden">
+              <iframe
+                width="100%"
+                height="100%"
+                src={mentor.videoUrl}
+                title={`${mentor.name} Introduction`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
               className="w-full h-full"
             ></iframe>
           </div>
         </motion.div>
+        )}
 
         {/* Detailed Description */}
         <motion.div
