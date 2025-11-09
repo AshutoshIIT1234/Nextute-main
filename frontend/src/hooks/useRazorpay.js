@@ -55,12 +55,19 @@ const useRazorpay = () => {
                 mentorId: mentorData.id,
                 mentorName: mentorData.name,
                 studentId: studentData.id,
+                studentEmail: studentData.email,
+                studentName: studentData.name,
                 amount: mentorData.sessionPrice,
               }
             );
 
             if (verifyResponse.data.success) {
-              toast.success('Booking confirmed! Check your email for details.');
+              toast.success('Booking confirmed! Redirecting to schedule your session...');
+              
+              // Redirect to Calendly after 2 seconds
+              setTimeout(() => {
+                window.location.href = 'https://calendly.com/nextuteedtech/30min';
+              }, 2000);
             } else {
               toast.error('Payment verification failed');
             }

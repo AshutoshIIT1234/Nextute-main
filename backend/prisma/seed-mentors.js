@@ -16,6 +16,7 @@ const mentors = [
     course: "MBBS",
     instituteName: "AIIMS Patna",
     rank: "AIR 1934",
+    calendlyLink: "https://calendly.com/nextuteedtech/30min",
   },
   {
     name: "Shubhomoy Dey",
@@ -30,6 +31,7 @@ const mentors = [
     course: "CSE",
     instituteName: "IIT Dhanbad",
     rank: "3186",
+    calendlyLink: "https://calendly.com/nextuteedtech/one-one-mentorship-clone",
   },
    {
     name: "Likhitha",
@@ -44,6 +46,7 @@ const mentors = [
     course: "mathematics and computing",
     instituteName: "IIT PATNA ",
     rank: "16k",
+    calendlyLink: "https://calendly.com/nextuteedtech/one-one-mentorship-clone-clone",
   },
    {
     name: "Karan garg",
@@ -58,6 +61,7 @@ const mentors = [
     course: "MBBS",
     instituteName: "AIIMS Rishikesh ",
     rank: "241",
+    calendlyLink: "https://calendly.com/nextuteedtech/one-one-mentorship-clone-clone-clone",
   },
  
 

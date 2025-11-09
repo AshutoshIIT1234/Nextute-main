@@ -198,8 +198,8 @@ The chatbot knows about:
    - Reviews and comparisons
 
 3. **Mentorship**
-   - Pro Plan (₹1,000)
-   - Premium Plan (₹1,500)
+   - Pro Plan (₹1,000) - Early Bird Offer (Originally ₹1,500)
+   - Premium Plan (₹1,499) - Early Bird Offer (Originally ₹1,999)
    - Features and benefits
 
 4. **Registration**

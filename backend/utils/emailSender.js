@@ -86,4 +86,26 @@ export const sendAdminAlertEmail = async (action, adminEmail) => {
   await transporter.sendMail(mailOptions);
 };
 
+// Generic email sender for custom emails
+export const sendEmail = async (to, subject, htmlContent) => {
+  try {
+    console.log(`📧 Sending email to: ${to}`);
+    console.log(`📝 Subject: ${subject}`);
+    
+    const mailOptions = {
+      from: emailConfig.from,
+      to: to,
+      subject: subject,
+      html: htmlContent,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("✅ Email sent successfully:", info.messageId);
+    return info;
+  } catch (error) {
+    console.error("❌ Failed to send email:", error);
+    throw error;
+  }
+};
+
 export default sendVerificationEmail;

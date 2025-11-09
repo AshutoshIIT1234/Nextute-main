@@ -414,7 +414,13 @@ const MentorDetailPage = () => {
                 <div className="border-2 border-[#2D7B67] rounded-xl p-6 hover:shadow-lg transition-all">
                   <div className="text-center mb-4">
                     <h3 className="text-xl font-bold text-gray-800 mb-2">Pro Plan</h3>
-                    <div className="text-3xl font-bold text-[#2D7B67] mb-2">₹1,000</div>
+                    <div className="flex items-baseline justify-center gap-2 mb-2">
+                      <span className="text-lg text-gray-400 line-through">₹1,500</span>
+                      <span className="text-3xl font-bold text-[#2D7B67]">₹1,000</span>
+                    </div>
+                    <div className="inline-block bg-yellow-400 text-gray-800 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                      🎉 Early Bird Offer
+                    </div>
                     <p className="text-sm text-gray-600">Perfect for focused learning</p>
                   </div>
                   <ul className="space-y-3 mb-6">
@@ -450,7 +456,13 @@ const MentorDetailPage = () => {
                   </div>
                   <div className="text-center mb-4">
                     <h3 className="text-xl font-bold mb-2">Premium Plan</h3>
-                    <div className="text-3xl font-bold mb-2">₹1,500</div>
+                    <div className="flex items-baseline justify-center gap-2 mb-2">
+                      <span className="text-lg text-white/50 line-through">₹1,999</span>
+                      <span className="text-3xl font-bold">₹1,499</span>
+                    </div>
+                    <div className="inline-block bg-yellow-400 text-purple-900 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                      🎉 Early Bird Offer
+                    </div>
                     <p className="text-sm">Complete mentorship experience</p>
                   </div>
                   <ul className="space-y-3 mb-6">

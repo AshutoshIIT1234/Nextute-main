@@ -618,8 +618,12 @@ const MentorshipComingSoon = () => {
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">Smart Guidance </h3>
                     <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold text-primary">₹101</span>
+                      <span className="text-lg text-gray-400 line-through">₹1,500</span>
+                      <span className="text-4xl font-bold text-primary">₹1,000</span>
                       <span className="text-gray-500">/session</span>
+                    </div>
+                    <div className="inline-block bg-accent text-white px-3 py-1 rounded-full text-xs font-bold mb-2">
+                      🎉 Early Bird Offer
                     </div>
                     <p className="text-sm text-gray-600">Get mentored by IITians/AIIMS students who’ve been exactly where you are now!
 </p>
@@ -703,8 +707,12 @@ const MentorshipComingSoon = () => {
                     </div>
                     <h3 className="text-2xl font-bold mb-2">Personalised Success Plan</h3>
                     <div className="flex items-baseline justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold">₹201</span>
+                      <span className="text-lg text-white/50 line-through">₹1,999</span>
+                      <span className="text-4xl font-bold">₹1,499</span>
                       <span className="text-white/70">/session</span>
+                    </div>
+                    <div className="inline-block bg-accent text-secondary px-3 py-1 rounded-full text-xs font-bold mb-2">
+                      🎉 Early Bird Offer
                     </div>
                     <p className="text-sm text-white/80">
 Your personal mentor from IIT/AIIMS will help you design a strategy built just for you.

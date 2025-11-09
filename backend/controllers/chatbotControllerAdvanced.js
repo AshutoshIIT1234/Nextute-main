@@ -50,7 +50,7 @@ const initializeKnowledgeBase = async () => {
       },
       {
         type: 'mentorship',
-        content: 'Our mentorship program connects students with experienced mentors who are IIT and NEET toppers. We offer two plans: Pro Plan (₹1,000) includes 1-hour session, doubt clearing, study material, and email support. Premium Plan (₹1,500) includes 1.5-hour session, personalized study plan, premium materials, 7-day WhatsApp support, and follow-up session.',
+        content: 'Our mentorship program connects students with experienced mentors who are IIT and NEET toppers. Early Bird Offer: Pro Plan ₹1,000 (originally ₹1,500) includes 2-hour session, exam strategy, expected PYQs, study techniques, and live Q&A. Premium Plan ₹1,499 (originally ₹1,999) includes 2-hour personalized session, custom study planner, monthly targets, expected PYQs with solutions, and performance analysis.',
         metadata: { category: 'mentorship', priority: 'high' }
       },
       {

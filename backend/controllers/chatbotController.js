@@ -75,7 +75,7 @@ const initializeKnowledgeBase = async () => {
       // Mentorship Programs
       {
         type: 'faq',
-        content: 'Our mentorship program connects students with IIT and NEET toppers. We offer two plans: Pro Plan (₹1,000) - 1 hour session, doubt clearing, study material, email support. Premium Plan (₹1,500) - 1.5 hour session, personalized study plan, premium materials, 7-day WhatsApp support, follow-up session. Mentors are experienced professionals who recently cleared competitive exams.',
+        content: 'Our mentorship program connects students with IIT and NEET toppers. We offer two plans with Early Bird pricing: Pro Plan - ₹1,000 (originally ₹1,500) - 2 hour session, exam strategy, expected PYQs, study techniques, live Q&A. Premium Plan - ₹1,499 (originally ₹1,999) - 2 hour personalized session, custom study planner, monthly targets, expected PYQs with solutions, performance analysis. Mentors are experienced IIT/AIIMS students.',
         keywords: ['mentorship', 'mentor', 'guidance', 'tutor', 'coaching', 'personal', 'one-on-one', 'price', 'cost', 'fees', 'plan', 'premium', 'pro'],
         metadata: { category: 'mentorship', priority: 'high' }
       },
@@ -117,7 +117,7 @@ const initializeKnowledgeBase = async () => {
       // Pricing
       {
         type: 'faq',
-        content: 'Nextute is free for students - browse institutes, read reviews, compare options at no cost. Mentorship pricing: Pro Plan ₹1,000 (1 hour), Premium Plan ₹1,500 (1.5 hours with extra benefits). Institute listing has different plans - contact us for details. Payment is secure via Razorpay.',
+        content: 'Nextute is free for students - browse institutes, read reviews, compare options at no cost. Mentorship Early Bird pricing: Pro Plan ₹1,000 (originally ₹1,500) for 2 hours, Premium Plan ₹1,499 (originally ₹1,999) for 2 hours with personalized benefits. Institute listing has different plans - contact us for details. Payment is secure via Razorpay.',
         keywords: ['price', 'cost', 'fees', 'charge', 'payment', 'free', 'paid', 'money', 'rupees'],
         metadata: { category: 'pricing', priority: 'high' }
       },
