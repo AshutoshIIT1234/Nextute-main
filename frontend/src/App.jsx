@@ -10,6 +10,7 @@ import usePreloadRoutes from "./hooks/usePreloadRoutes";
 import usePerformanceMonitor from "./hooks/usePerformanceMonitor";
 import RouteBasedSkeleton from "./components/RouteSkeletons";
 import ChatBot from "./components/ChatBot";
+import EarlyBirdPopup from "./components/EarlyBirdPopup";
 
 // Instant loaded components with aggressive caching
 import { createInstantLoader } from "./utils/instantLoader";
@@ -181,6 +182,7 @@ const App = memo(() => {
         </Suspense>
         {showLogin && <LoginPopup />}
         {showSignup && <SignupPopup />}
+        <EarlyBirdPopup />
         <ChatBot />
         <Toaster />
       </ErrorBoundary>
