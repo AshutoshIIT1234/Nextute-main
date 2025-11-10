@@ -53,6 +53,8 @@ const devLocalOrigins = [
 
 const allowedOrigins = new Set([
   process.env.FRONTEND_URL,
+  "https://nextute.com",
+  "https://www.nextute.com",
   ...devLocalOrigins,
 ].filter(Boolean));
 
