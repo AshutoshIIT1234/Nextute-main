@@ -51,6 +51,10 @@ const devLocalOrigins = [
   "http://localhost:3000",
 ];
 
+// Build a set of allowed origin strings (full origin) and a set of allowed hostnames.
+// This allows requests from either the exact origin (e.g. https://www.nextute.com)
+// or from any origin whose hostname matches an allowed hostname (covers trailing
+// differences like presence/absence of www).
 const allowedOrigins = new Set([
   process.env.FRONTEND_URL,
   "https://nextute.com",
@@ -58,11 +62,35 @@ const allowedOrigins = new Set([
   ...devLocalOrigins,
 ].filter(Boolean));
 
+const allowedHostnames = new Set();
+for (const o of allowedOrigins) {
+  try {
+    const hn = new URL(o).hostname;
+    if (hn) allowedHostnames.add(hn);
+  } catch (e) {
+    // not a full URL (e.g., someone added a hostname directly) - add as-is
+    if (typeof o === "string") allowedHostnames.add(o);
+  }
+}
+
+// Always add canonical hostnames for production domain variants
+allowedHostnames.add("nextute.com");
+allowedHostnames.add("www.nextute.com");
+
 app.use(
   cors({
     origin: (origin, callback) => {
       // allow requests with no origin (e.g., curl, server-to-server)
       if (!origin) return callback(null, true);
+
+      // Normalize origin and check hostname first (covers www vs non-www)
+      try {
+        const hostname = new URL(origin).hostname;
+        if (allowedHostnames.has(hostname)) return callback(null, true);
+      } catch (e) {
+        // fall back to checking the raw origin string
+      }
+
       if (allowedOrigins.has(origin)) return callback(null, true);
       return callback(new Error("CORS policy: Origin not allowed"), false);
     },

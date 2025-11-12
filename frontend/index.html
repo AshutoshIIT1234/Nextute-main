@@ -7,29 +7,14 @@
     <meta name="description" content="Nextute - Find the best educational institutes near you" />
     <meta name="theme-color" content="#3b82f6" />
     
-    <!-- Security Headers -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="DENY" />
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <!-- Cache Control - Force revalidation -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     
     <!-- Preconnect to external domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
-    <!-- DNS prefetch for better performance -->
-    <link rel="dns-prefetch" href="//api.nextute.com" />
-    
-    <!-- Preload critical resources -->
-    <link rel="modulepreload" href="/src/main.jsx" />
-    <link rel="modulepreload" href="/src/App.jsx" />
-    
-    <!-- Resource hints -->
-    <link rel="prefetch" href="/src/pages/HomePage.jsx" />
-    <link rel="prefetch" href="/src/components/Student/StudentLogin.jsx" />
-    
-    <!-- Critical font preload -->
-    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
     
     <title>Nextute - Educational Institute Discovery Platform</title>
     
@@ -144,5 +129,17 @@
       </div>
     </div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Remove skeleton once React loads
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const skeleton = document.getElementById('initial-skeleton');
+          if (skeleton && document.querySelector('[data-reactroot], [data-reactid]') || document.getElementById('root').children.length > 1) {
+            skeleton.style.opacity = '0';
+            setTimeout(function() { skeleton.remove(); }, 300);
+          }
+        }, 100);
+      });
+    </script>
   </body>
 </html>

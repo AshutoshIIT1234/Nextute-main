@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import AppContextProvider from "./context/AppContext.jsx";
 import "./utils/performanceOptimizer.js";
+import { startVersionCheck } from "./utils/versionChecker.js";
 
 // Register service worker for caching
 if ('serviceWorker' in navigator && import.meta.env.PROD) {
@@ -41,3 +42,8 @@ root.render(
 requestAnimationFrame(() => {
   setTimeout(removeInitialSkeleton, 50);
 });
+
+// Start version checking in production
+if (import.meta.env.PROD) {
+  startVersionCheck();
+}

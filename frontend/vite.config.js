@@ -13,6 +13,8 @@ export default defineConfig({
     sourcemap: false,
     target: "es2020",
     chunkSizeWarningLimit: 1000,
+    // Force new hashes on every build for cache busting
+    assetsInlineLimit: 0,
     rollupOptions: {
       output: {
         manualChunks: {

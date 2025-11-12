@@ -1,0 +1,43 @@
+services:
+  # Backend Service (using cloud database)
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: nextute-backend
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 8080
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASS: ${EMAIL_PASS}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost}
+    ports:
+      - "8080:8080"
+    networks:
+      - nextute-network
+
+  # Frontend Service
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: nextute-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - nextute-network
+    environment:
+      VITE_BACKEND_BASE_URL: ${VITE_BACKEND_BASE_URL:-http://localhost:8080}
+
+networks:
+  nextute-network:
+    driver: bridge

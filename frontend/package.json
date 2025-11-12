@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node update-version.js",
     "build": "vite build --mode production",
     "build:analyze": "vite build --mode production && npx vite-bundle-analyzer dist/stats.html",
     "lint": "eslint .",
