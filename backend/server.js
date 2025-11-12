@@ -59,6 +59,7 @@ const allowedOrigins = new Set([
   process.env.FRONTEND_URL,
   "https://nextute.com",
   "https://www.nextute.com",
+  "http://72.60.218.219",  // VPS IP
   ...devLocalOrigins,
 ].filter(Boolean));
 
