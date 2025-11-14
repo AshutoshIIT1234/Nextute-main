@@ -24,7 +24,8 @@ export default defineConfig({
           "utils": ["axios", "js-cookie", "qrcode", "libphonenumber-js", "lucide-react", "react-icons"]
         },
         assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.');
+          const fileName = assetInfo.names?.[0] || assetInfo.name || '';
+          const info = fileName.split('.');
           const ext = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
             return `assets/images/[name]-[hash][extname]`;

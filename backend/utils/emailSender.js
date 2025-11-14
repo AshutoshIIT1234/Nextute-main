@@ -87,16 +87,20 @@ export const sendAdminAlertEmail = async (action, adminEmail) => {
 };
 
 // Generic email sender for custom emails
-export const sendEmail = async (to, subject, htmlContent) => {
+export const sendEmail = async ({ to, subject, html }) => {
   try {
     console.log(`📧 Sending email to: ${to}`);
     console.log(`📝 Subject: ${subject}`);
+    
+    if (!to) {
+      throw new Error('No recipient email address provided');
+    }
     
     const mailOptions = {
       from: emailConfig.from,
       to: to,
       subject: subject,
-      html: htmlContent,
+      html: html,
     };
 
     const info = await transporter.sendMail(mailOptions);

@@ -23,7 +23,7 @@ export const uploadStudentProfileImage = async (req, res) => {
   }
 };
 import { validate as isUuid } from 'uuid';
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { createSecretToken } from "../config/jwt.js";
 import sendVerificationEmail from "../utils/emailSender.js";
 import { handleError } from "../utils/errorHandler.js";

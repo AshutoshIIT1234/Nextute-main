@@ -70,22 +70,22 @@ const CareersPage = () => {
 
   const benefits = [
     {
-      icon: <FaRocket className="text-4xl text-blue-600" />,
+      icon: <FaRocket className="text-4xl text-teal-600" />,
       title: 'Flexible Schedule',
       description: 'Work on your own time and set your availability'
     },
     {
-      icon: <FaHeart className="text-4xl text-red-600" />,
+      icon: <FaHeart className="text-4xl text-emerald-600" />,
       title: 'Competitive Pay',
       description: 'Earn competitive rates for your expertise'
     },
     {
-      icon: <FaUsers className="text-4xl text-green-600" />,
+      icon: <FaUsers className="text-4xl text-teal-700" />,
       title: 'Impact Lives',
       description: 'Help students achieve their career goals'
     },
     {
-      icon: <FaLightbulb className="text-4xl text-yellow-600" />,
+      icon: <FaLightbulb className="text-4xl text-emerald-500" />,
       title: 'Grow Together',
       description: 'Continuous learning and development opportunities'
     }
@@ -101,11 +101,11 @@ const CareersPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-emerald-50/30 to-white">
       <Navbar />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
+      <section className="pt-32 pb-16 px-4 bg-gradient-to-br from-teal-50 via-emerald-50/50 to-white">
         <div className="max-w-6xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -113,17 +113,17 @@ const CareersPage = () => {
             transition={{ duration: 0.6 }}
           >
             <div className="flex justify-center items-center gap-4 mb-6">
-              <FaUniversity className="text-5xl text-blue-600" />
-              <FaMedal className="text-6xl text-yellow-500" />
-              <FaGraduationCap className="text-5xl text-green-600" />
+              <FaUniversity className="text-5xl text-teal-700" />
+              <FaMedal className="text-6xl text-emerald-500" />
+              <FaGraduationCap className="text-5xl text-teal-600" />
             </div>
             <h1 className="text-5xl font-bold text-gray-900 mb-4">
               Join Nextute as a Student Mentor
             </h1>
-            <div className="inline-block bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-full font-semibold text-lg mb-6">
+            <div className="inline-block bg-gradient-to-r from-teal-700 to-emerald-600 text-white px-6 py-3 rounded-full font-semibold text-lg mb-6 shadow-lg">
               Exclusively for IIT & AIIMS Students
             </div>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Share your knowledge, earn while you study, and help aspiring students achieve their dreams
             </p>
           </motion.div>
@@ -159,9 +159,9 @@ const CareersPage = () => {
           <p className="text-center text-gray-600 mb-12 text-lg">
             We're looking for exceptional students from India's premier institutions
           </p>
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg shadow-lg p-8 border-2 border-blue-200">
+          <div className="bg-gradient-to-br from-teal-50 to-emerald-50 rounded-lg shadow-lg p-8 border-2 border-teal-200">
             <div className="flex items-center justify-center gap-4 mb-6">
-              <FaUniversity className="text-4xl text-blue-600" />
+              <FaUniversity className="text-4xl text-teal-700" />
               <h3 className="text-2xl font-bold text-gray-800">IIT & AIIMS Students Only</h3>
             </div>
             <ul className="space-y-4">
@@ -173,7 +173,7 @@ const CareersPage = () => {
                   transition={{ delay: index * 0.1 }}
                   className="flex items-start"
                 >
-                  <span className="text-green-600 mr-3 text-xl font-bold">✓</span>
+                  <span className="text-emerald-600 mr-3 text-xl font-bold">✓</span>
                   <span className="text-gray-700 text-lg">{req}</span>
                 </motion.li>
               ))}
@@ -183,7 +183,7 @@ const CareersPage = () => {
       </section>
 
       {/* Application Form */}
-      <section className="py-16 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
+      <section className="py-16 px-4 bg-gradient-to-br from-teal-50 to-emerald-50">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -191,7 +191,7 @@ const CareersPage = () => {
             className="bg-white rounded-2xl shadow-xl p-8"
           >
             <div className="text-center mb-8">
-              <FaBriefcase className="text-5xl text-blue-600 mx-auto mb-4" />
+              <FaBriefcase className="text-5xl text-teal-700 mx-auto mb-4" />
               <h2 className="text-3xl font-bold mb-2">Apply Now</h2>
               <p className="text-gray-600">Join our community of expert mentors</p>
             </div>
@@ -208,7 +208,7 @@ const CareersPage = () => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     placeholder="John Doe"
                   />
                 </div>
@@ -223,7 +223,7 @@ const CareersPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -239,7 +239,7 @@ const CareersPage = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   placeholder="+91 98765 43210"
                 />
               </div>
@@ -254,7 +254,7 @@ const CareersPage = () => {
                     value={formData.institution}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   >
                     <option value="">Select your institution...</option>
                     <optgroup label="IIT">
@@ -313,7 +313,7 @@ const CareersPage = () => {
                     value={formData.course}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     placeholder="e.g., B.Tech CSE, MBBS"
                   />
                 </div>
@@ -329,7 +329,7 @@ const CareersPage = () => {
                     value={formData.year}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   >
                     <option value="">Select...</option>
                     <option value="1st Year">1st Year</option>
@@ -351,7 +351,7 @@ const CareersPage = () => {
                     value={formData.expertise}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                     placeholder="e.g., Physics, Mathematics, Biology"
                   />
                 </div>
@@ -366,7 +366,7 @@ const CareersPage = () => {
                   name="linkedin"
                   value={formData.linkedin}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   placeholder="https://linkedin.com/in/yourprofile"
                 />
               </div>
@@ -381,7 +381,7 @@ const CareersPage = () => {
                   onChange={handleChange}
                   required
                   rows="5"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   placeholder="Tell us about your motivation and what you can bring to our students..."
                 />
               </div>
@@ -389,7 +389,7 @@ const CareersPage = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-teal-700 to-emerald-600 text-white py-4 rounded-lg font-semibold hover:from-teal-800 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Submitting...' : 'Submit Application'}
               </button>

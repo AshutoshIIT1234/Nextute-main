@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Tilt from "react-parallax-tilt";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { BsChatTextFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import * as assets from "../assets/index.js";
-import { card3DVariants, button3D, glowPulse } from "../utils/animations3D";
+import { card3DVariants, button3D } from "../utils/animations3D";
 
 // Default fallback image
 const DEFAULT_IMAGE =
@@ -89,44 +88,8 @@ const Card = ({ institute = defaultInstitute }) => {
     );
   };
 
-  // Animation variants
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
-    },
-    hover: {
-      scale: 1.03,
-      boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)",
-      transition: { duration: 0.3 },
-    },
-  };
-
-  const imageVariants = {
-    hover: { scale: 1.05, transition: { duration: 0.4 } },
-  };
-
-  const buttonVariants = {
-    hover: {
-      scale: 1.05,
-      backgroundColor: "#10B981",
-      transition: { duration: 0.2 },
-    },
-    tap: { scale: 0.95 },
-  };
-
   return (
-    <Tilt
-      tiltMaxAngleX={10}
-      tiltMaxAngleY={10}
-      perspective={1000}
-      scale={1.02}
-      transitionSpeed={2000}
-      gyroscope={true}
-      className="w-full max-w-[22rem] sm:max-w-[24rem] mx-auto my-4"
-    >
+    <div className="w-full max-w-[22rem] sm:max-w-[24rem] mx-auto my-4">
       <motion.div
         variants={card3DVariants}
         initial="initial"
@@ -229,7 +192,7 @@ const Card = ({ institute = defaultInstitute }) => {
         </motion.button>
       </div>
     </motion.div>
-    </Tilt>
+    </div>
   );
 };
 

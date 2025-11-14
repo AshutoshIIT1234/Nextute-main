@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Ad from "../components/Ad";
-import Test from "../components/Test";
-import SearchTest from "../components/SearchTest";
 import Footer from "../components/Footer";
 import { AppContext } from "../context/AppContext";
 const Testimonial = React.lazy(() => import("../components/Testimonial"));
@@ -96,24 +94,6 @@ const HomePage = () => {
       }>
         <Testimonial />
       </Suspense>
-      
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-      >
-        <Test />
-      </motion.div>
-      
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.6 }}
-      >
-        <SearchTest />
-      </motion.div>
       
       <Footer />
     </div>

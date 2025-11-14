@@ -1,0 +1,9 @@
+@echo off
+echo Restarting Vite Dev Server...
+echo.
+cd frontend
+echo Clearing Vite cache...
+if exist node_modules\.vite rmdir /s /q node_modules\.vite
+echo.
+echo Starting dev server...
+npm run dev

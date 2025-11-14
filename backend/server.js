@@ -142,12 +142,12 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // 404 handler
-app.use((req, res) => {
+app.use((_req, res) => {
   return handleError(res, 404, "Endpoint not found", "NOT_FOUND");
 });
 
 // Error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   logger.error("Server error:", {
     message: err.message,
     stack: err.stack,

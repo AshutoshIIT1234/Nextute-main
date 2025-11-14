@@ -78,7 +78,7 @@ const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full bg-[#f2fffc] bg-opacity-60 shadow-lg border-b border-gray-200 mb-5 sm:mb-10"
+      className="w-full bg-[#f2fffc] bg-opacity-60 shadow-lg border-b border-gray-200 mb-5 sm:mb-10 relative z-40"
     >
     <div className="w-full max-w-[94rem] h-24 mx-auto flex items-center justify-between py-4 px-4 sm:px-8 relative">
       <NavLink to="/">
@@ -123,7 +123,7 @@ const Navbar = () => {
           {isServicesDropdownOpen && (
             <motion.div
               ref={servicesDropdownRef}
-              className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10 overflow-hidden"
+              className="absolute left-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-xl z-50 overflow-hidden"
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
@@ -173,7 +173,7 @@ const Navbar = () => {
             {isDropdownOpen && (
               <div
                 ref={dropdownRef}
-                className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg z-10"
+                className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-xl z-50"
               >
                 <NavLink
                   to={`/${userType}/dashboard`}

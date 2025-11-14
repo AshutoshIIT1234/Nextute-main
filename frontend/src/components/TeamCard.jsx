@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Tilt from "react-parallax-tilt";
 import {
   User,
   Badge,
@@ -61,7 +60,7 @@ const TeamCard = ({
   };
 
   return (
-    <Tilt options={{ max: 15, scale: 1.05, speed: 400 }}>
+    <div>
       <motion.div
         variants={cardVariants}
         initial="hidden"
@@ -165,7 +164,7 @@ const TeamCard = ({
           whileHover={{ opacity: 1 }}
         />
       </motion.div>
-    </Tilt>
+    </div>
   );
 };
 
