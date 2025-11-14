@@ -17,6 +17,7 @@ import jobRoutes from "./routes/jobRoutes.js";
 import paymentRoutes from './routes/paymentRoutes.js';
 import mentorshipRoutes from './routes/mentorshipRoutes.js';
 import chatbotRoutes from './routes/chatbotRoutes.js';
+import careerRoutes from './routes/careerRoutes.js';
 
 dotenv.config();
 
@@ -59,6 +60,8 @@ const allowedOrigins = new Set([
   process.env.FRONTEND_URL,
   "https://nextute.com",
   "https://www.nextute.com",
+  "http://nextute.com",
+  "http://www.nextute.com",
   "http://72.60.218.219",  // VPS IP
   ...devLocalOrigins,
 ].filter(Boolean));
@@ -130,6 +133,7 @@ app.use("/api/jobs/", jobRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/mentorship', mentorshipRoutes);
 app.use('/api/chat', chatbotRoutes);
+app.use('/api/careers', careerRoutes);
 
 // Debug routes (only in development)
 if (process.env.NODE_ENV !== 'production') {
