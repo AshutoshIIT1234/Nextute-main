@@ -1,5 +1,4 @@
-
- {
-"version": "$(Get-Date -Format 'yyyyMMdd-HHmmss')",
-  "buildTime": "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')"
+{
+  "version": "20251114-002",
+  "buildTime": "2025-11-14 00:02:00"
 }
