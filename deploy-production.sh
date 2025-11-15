@@ -44,6 +44,10 @@ echo ""
 echo "Step 2: Building Frontend..."
 cd ../frontend || exit 1
 
+echo "Cleaning node_modules and cache..."
+rm -rf node_modules package-lock.json
+npm cache clean --force
+
 echo "Installing frontend dependencies..."
 npm install
 if [ $? -ne 0 ]; then
@@ -107,3 +111,4 @@ else
     echo "   ./deploy-production.sh"
     echo ""
 fi
+.
