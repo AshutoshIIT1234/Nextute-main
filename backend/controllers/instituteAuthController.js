@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { createSecretToken } from "../config/jwt.js";
 import sendVerificationEmail from "../utils/emailSender.js";
 import {
