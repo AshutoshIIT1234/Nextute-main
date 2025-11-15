@@ -60,7 +60,7 @@ const MentorshipComingSoon = () => {
     const fetchMentors = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL || ''}/mentorship/mentors?filter=${filter}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || '/api'}/mentorship/mentors?filter=${filter}`);
         
         if (response.data.success) {
           // Map backend data to frontend format with hardcoded images
