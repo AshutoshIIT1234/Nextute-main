@@ -72,10 +72,20 @@ if [ "$ON_VPS" = true ]; then
     sudo mkdir -p /var/www/nextute
     sudo cp -r dist/* /var/www/nextute/
     
-    # Restart backend with PM2
-    echo "Restarting backend..."
+    # Start/Restart backend with PM2
+    echo "Starting backend..."
     cd ../backend
-    pm2 restart nextute-backend || pm2 start server.js --name nextute-backend
+    
+    # Check if process exists
+    if pm2 list | grep -q "nextute-backend"; then
+        echo "Restarting existing PM2 process..."
+        pm2 restart nextute-backend
+    else
+        echo "Starting new PM2 process..."
+        pm2 start server.js --name nextute-backend
+    fi
+    
+    pm2 save
     
     # Restart Nginx
     echo "Restarting Nginx..."
