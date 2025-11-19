@@ -1,5 +1,5 @@
 import prisma from "../db/index.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import { sendResetPasswordEmail } from "../utils/sendResetPasswordEmail.js";
 

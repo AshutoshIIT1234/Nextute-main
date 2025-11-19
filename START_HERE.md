@@ -8,18 +8,27 @@ I've fixed the critical issues. Now you just need to deploy.
 
 ---
 
-## 🎯 FASTEST WAY TO FIX (3 Steps)
+## 🎯 FASTEST WAY TO FIX (Choose One)
 
-### Step 1: Run This on Windows
+### Option A: Fix CORS Issues (RECOMMENDED)
+If you're seeing CORS errors in browser console:
+```cmd
+cd Nextute-main
+FIX_CORS_NOW.bat
+```
+
+### Option B: Full Deployment
+For complete deployment:
 ```cmd
 cd Nextute-main
 DEPLOY_TO_VPS.bat
 ```
 
 **That's it!** The script will:
-- ✅ Build your frontend
+- ✅ Build your frontend with correct URLs
 - ✅ Upload to VPS
 - ✅ Deploy automatically
+- ✅ Fix CORS issues
 - ✅ Restart all services
 
 Your site will be live at https://nextute.com
@@ -157,3 +166,4 @@ DEPLOY_TO_VPS.bat
 ---
 
 **Need help?** Check `QUICK_FIX_README.md` or `PRODUCTION_CHECKLIST.md`
+

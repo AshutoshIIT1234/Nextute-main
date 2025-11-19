@@ -1,0 +1,57 @@
+========================================
+BCRYPT FIX - Run These Commands on VPS
+========================================
+
+The issue: Your code imports 'bcrypt' but package.json has 'bcryptjs'
+I've fixed the code to use 'bcryptjs' everywhere.
+
+OPTION 1 - Upload fixed files from Windows (run locally):
+---------------------------------------------------------
+deploy-bcrypt-fix.bat
+
+OPTION 2 - Manual fix on VPS (SSH and run):
+---------------------------------------------------------
+cd /root/Nextute-main/backend
+
+# Fix the imports manually
+sed -i 's/from "bcrypt"/from "bcryptjs"/g' prisma/seed.js
+sed -i 's/from "bcrypt"/from "bcryptjs"/g' controllers/forgotAndResetPasswordController.js
+
+# Restart backend
+pm2 restart nextute-backend
+
+# Check logs
+pm2 logs nextute-backend --lines 20
+
+OPTION 3 - Quick restart (if files already uploaded):
+---------------------------------------------------------
+cd /root/Nextute-main/backend && pm2 restart nextute-backend && sleep 3 && curl http://localhost:8080/test
+
+========================================
+Verify Fix:
+========================================
+1. Check logs for errors:
+   pm2 logs nextute-backend --lines 50
+
+2. Should NOT see "Cannot find package 'bcrypt'" anymore
+
+3. Test endpoints:
+   curl http://localhost:8080/test
+   curl http://localhost:8080/api/institutes/all-institutes
+
+4. Test in browser:
+   https://www.nextute.com/api/institutes/all-institutes
+
+========================================
+If Database Connection Errors Persist:
+========================================
+The logs show "Error in PostgreSQL connection: Error { kind: Closed }"
+
+This might be due to:
+1. Neon database connection limits
+2. Connection pool exhausted
+3. Database sleeping (Neon free tier)
+
+To fix:
+cd /root/Nextute-main/backend
+pm2 restart nextute-backend

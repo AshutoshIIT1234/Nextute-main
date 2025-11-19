@@ -1,0 +1,31 @@
+========================================
+QUICK BACKEND FIX - Run on VPS
+========================================
+
+SSH into your VPS and run ONE of these commands:
+
+OPTION 1 - Quick Restart (if backend files are fine):
+---------------------------------------------------------
+cd /root/Nextute-main/backend && pm2 stop nextute-backend && pm2 delete nextute-backend && pm2 start server.js --name nextute-backend && pm2 save && pm2 logs nextute-backend --lines 20 --nostream
+
+OPTION 2 - Full Fix (reinstall dependencies):
+---------------------------------------------------------
+cd /root/Nextute-main && bash fix-backend-404.sh
+
+OPTION 3 - Use existing restart script:
+---------------------------------------------------------
+cd /root/Nextute-main && bash restart-backend.sh
+
+========================================
+After running, test with:
+========================================
+curl http://localhost:8080/test
+curl http://localhost:8080/api/institutes/all-institutes
+
+Then test in browser:
+https://www.nextute.com/api/institutes/all-institutes
+
+========================================
+Check logs if still not working:
+========================================
+pm2 logs nextute-backend --lines 50
