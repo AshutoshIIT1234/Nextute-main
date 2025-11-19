@@ -1,0 +1,78 @@
+╔═══════════════════════════════════════════════════════════╗
+║                 NEXTUTE DEPLOYMENT                        ║
+║              Quick Start Guide                            ║
+╚═══════════════════════════════════════════════════════════╝
+
+🚀 DEPLOY EVERYTHING NOW
+═══════════════════════════════════════════════════════════
+Double-click this file:
+  → DEPLOY-NOW.bat
+
+This will:
+  ✓ Fix backend bcrypt errors
+  ✓ Rebuild and deploy frontend
+  ✓ Restart all services
+  ✓ Test everything
+
+Time: 5-10 minutes
+
+
+🔧 BACKEND ONLY (Quick Fix)
+═══════════════════════════════════════════════════════════
+Double-click this file:
+  → RUN-BACKEND-FIX.bat
+
+This will:
+  ✓ Fix bcrypt import errors
+  ✓ Restart backend
+  ✓ Test API endpoints
+
+Time: 1 minute
+
+
+📋 WHAT WAS FIXED
+═══════════════════════════════════════════════════════════
+Backend Issue:
+  ✗ Error: Cannot find package 'bcrypt'
+  ✓ Fixed: Changed to 'bcryptjs' in 2 files
+
+Files Fixed:
+  ✓ backend/prisma/seed.js
+  ✓ backend/controllers/forgotAndResetPasswordController.js
+
+
+🧪 TEST YOUR DEPLOYMENT
+═══════════════════════════════════════════════════════════
+1. Backend API:
+   https://www.nextute.com/api/institutes/all-institutes
+
+2. Frontend:
+   https://www.nextute.com
+   (Press Ctrl+Shift+R to hard refresh)
+
+3. Check logs (SSH to VPS):
+   pm2 logs nextute-backend
+
+
+🆘 IF SOMETHING GOES WRONG
+═══════════════════════════════════════════════════════════
+1. Check backend logs:
+   ssh root@72.60.218.219
+   pm2 logs nextute-backend --lines 50
+
+2. Restart backend:
+   ssh root@72.60.218.219
+   pm2 restart nextute-backend
+
+3. Full redeploy:
+   Double-click: DEPLOY-NOW.bat
+
+
+📞 VPS CONNECTION
+═══════════════════════════════════════════════════════════
+IP: 72.60.218.219
+User: root
+SSH: ssh root@72.60.218.219
+
+
+✅ RECOMMENDED: Run DEPLOY-NOW.bat first!
