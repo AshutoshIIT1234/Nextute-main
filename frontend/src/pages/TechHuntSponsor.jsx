@@ -21,7 +21,8 @@ const TechHuntSponsor = () => {
   const [eventStarted, setEventStarted] = useState(false);
 
   // Event start time: December 3, 2025 at 7:30 PM
-  const EVENT_START_TIME = new Date('2025-12-03T19:30:00').getTime();
+  // Set to past time to make it live immediately
+  const EVENT_START_TIME = new Date('2025-12-03T00:00:00').getTime();
 
   // Countdown timer
   useEffect(() => {
