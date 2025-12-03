@@ -1,0 +1,161 @@
+╔══════════════════════════════════════════════════════════════╗
+║              VPS QUICK FIX COMMANDS                          ║
+╚══════════════════════════════════════════════════════════════╝
+
+🔧 FIX NGINX ASSET ERRORS (Missing JS/CSS files)
+═══════════════════════════════════════════════════════════════
+
+Run this on your VPS:
+
+cd /root/Nextute-main
+chmod +x fix-nginx-assets.sh
+./fix-nginx-assets.sh
+
+
+OR Quick One-Liner:
+═══════════════════════════════════════════════════════════════
+
+cd /root/Nextute-main/frontend && rm -rf dist && npm run build && sudo rm -rf /var/www/nextute/* && sudo cp -r dist/* /var/www/nextute/ && sudo chown -R www-data:www-data /var/www/nextute && sudo systemctl reload nginx
+
+
+🔍 CHECK WHAT'S WRONG
+═══════════════════════════════════════════════════════════════
+
+# Check Nginx errors
+sudo tail -f /var/log/nginx/error.log
+
+# Check what files exist
+ls -la /var/www/nextute/
+ls -la /var/www/nextute/assets/
+
+# Check Nginx config
+sudo nginx -t
+
+# Check Nginx status
+sudo systemctl status nginx
+
+
+📦 DEPLOY TECH HUNT FEATURE
+═══════════════════════════════════════════════════════════════
+
+cd /root/Nextute-main
+
+# Update database
+cd backend
+npx prisma db push
+
+# Rebuild frontend
+cd ../frontend
+npm run build
+
+# Copy to Nginx
+sudo cp -r dist/* /var/www/nextute/
+sudo chown -R www-data:www-data /var/www/nextute
+
+# Restart services
+pm2 restart all
+sudo systemctl reload nginx
+
+
+🧪 TEST TECH HUNT
+═══════════════════════════════════════════════════════════════
+
+# Test backend
+curl http://localhost:8080/test
+curl http://localhost:8080/api/tech-hunt/stats
+
+# Add test participant
+curl -X POST http://localhost:8080/api/tech-hunt/claim \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Ashutosh","rollNumber":"2312res192","teamName":"Akatsuki"}'
+
+# View participants
+curl http://localhost:8080/api/tech-hunt/participants
+
+
+📊 CHECK SERVICES
+═══════════════════════════════════════════════════════════════
+
+# PM2 status
+pm2 status
+pm2 logs backend --lines 50
+
+# Nginx status
+sudo systemctl status nginx
+
+# Check ports
+sudo netstat -tulpn | grep :8080
+sudo netstat -tulpn | grep :80
+
+
+🔄 RESTART EVERYTHING
+═══════════════════════════════════════════════════════════════
+
+# Restart backend
+pm2 restart backend
+
+# Restart Nginx
+sudo systemctl restart nginx
+
+# Restart all PM2 processes
+pm2 restart all
+
+
+🧹 CLEAN CACHE
+═══════════════════════════════════════════════════════════════
+
+# Clear Vite cache
+cd /root/Nextute-main/frontend
+rm -rf node_modules/.vite
+rm -rf dist
+
+# Clear Nginx cache (if configured)
+sudo rm -rf /var/cache/nginx/*
+
+
+📝 VIEW LOGS
+═══════════════════════════════════════════════════════════════
+
+# Nginx error log
+sudo tail -f /var/log/nginx/error.log
+
+# Nginx access log
+sudo tail -f /var/log/nginx/access.log
+
+# Backend logs
+pm2 logs backend
+
+# All PM2 logs
+pm2 logs
+
+
+🎯 COMMON ISSUES & FIXES
+═══════════════════════════════════════════════════════════════
+
+Issue: Assets not found (404 errors)
+Fix: Rebuild and copy frontend
+     cd /root/Nextute-main/frontend
+     npm run build
+     sudo cp -r dist/* /var/www/nextute/
+
+Issue: Backend not responding
+Fix: Restart PM2
+     pm2 restart backend
+     pm2 logs backend
+
+Issue: Database error
+Fix: Update schema
+     cd /root/Nextute-main/backend
+     npx prisma generate
+     npx prisma db push
+
+Issue: Permission denied
+Fix: Set correct permissions
+     sudo chown -R www-data:www-data /var/www/nextute
+     sudo chmod -R 755 /var/www/nextute
+
+
+╔══════════════════════════════════════════════════════════════╗
+║  CURRENT ISSUE: Nginx can't find asset files                ║
+║  SOLUTION: Run fix-nginx-assets.sh                          ║
+╚══════════════════════════════════════════════════════════════╝
