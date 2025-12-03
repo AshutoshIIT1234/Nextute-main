@@ -1,0 +1,57 @@
+
+    ╔═══════════════════════════════════════════════╗
+    ║                                               ║
+    ║         NEXTUTE DEPLOYMENT                    ║
+    ║         Fix Backend + Update Frontend         ║
+    ║                                               ║
+    ╚═══════════════════════════════════════════════╝
+
+
+    🎯 WHAT TO DO NOW:
+
+    1. Double-click this file:
+       
+       ► DEPLOY-NOW.bat ◄
+       
+    2. Wait 5-10 minutes
+    
+    3. Test your site:
+       https://www.nextute.com
+
+
+    ✅ THAT'S IT!
+
+
+    ═══════════════════════════════════════════════
+
+    📖 Need more info?
+       → README-DEPLOYMENT.md
+
+    🔧 Backend only?
+       → RUN-BACKEND-FIX.bat
+
+    📋 Step-by-step?
+       → DEPLOY-CHECKLIST.txt
+
+    ═══════════════════════════════════════════════
+
+
+    🐛 WHAT WAS FIXED:
+
+    Backend Error:
+      ✗ Cannot find package 'bcrypt'
+      ✓ Fixed: Changed to 'bcryptjs'
+
+    Files Fixed:
+      ✓ backend/prisma/seed.js
+      ✓ backend/controllers/forgotAndResetPasswordController.js
+
+
+    ═══════════════════════════════════════════════
+
+
+    🚀 READY? RUN THIS:
+
+       ► DEPLOY-NOW.bat ◄
+
+

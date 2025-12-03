@@ -1,0 +1,61 @@
+╔═══════════════════════════════════════════════════════════╗
+║           NEXTUTE DEPLOYMENT CHECKLIST                    ║
+╚═══════════════════════════════════════════════════════════╝
+
+BEFORE DEPLOYMENT
+═══════════════════════════════════════════════════════════
+[ ] All changes saved locally
+[ ] Terminal/Command Prompt open in Nextute-main folder
+[ ] VPS SSH access working (test: ssh root@72.60.218.219)
+
+
+DEPLOYMENT STEPS
+═══════════════════════════════════════════════════════════
+[ ] Step 1: Run DEPLOY-NOW.bat
+[ ] Step 2: Wait for completion (5-10 minutes)
+[ ] Step 3: Check for any error messages
+
+
+VERIFICATION
+═══════════════════════════════════════════════════════════
+[ ] Backend API responds:
+    https://www.nextute.com/api/institutes/all-institutes
+    (Should return JSON, not 404)
+
+[ ] Frontend loads:
+    https://www.nextute.com
+    (Press Ctrl+Shift+R for hard refresh)
+
+[ ] No console errors:
+    Open DevTools (F12) → Console tab
+    (Should be clean, no red errors)
+
+[ ] Backend logs clean:
+    ssh root@72.60.218.219
+    pm2 logs nextute-backend --lines 30
+    (No "Cannot find package 'bcrypt'" errors)
+
+
+IF SOMETHING FAILS
+═══════════════════════════════════════════════════════════
+[ ] Check error message in terminal
+[ ] Check backend logs: pm2 logs nextute-backend
+[ ] Try restarting: pm2 restart nextute-backend
+[ ] Run full deploy again: DEPLOY-NOW.bat
+
+
+FINAL CHECKS
+═══════════════════════════════════════════════════════════
+[ ] Site loads: https://www.nextute.com
+[ ] API works: https://www.nextute.com/api/institutes/all-institutes
+[ ] No errors in browser console
+[ ] Backend running: pm2 list (on VPS)
+
+
+✅ ALL DONE!
+═══════════════════════════════════════════════════════════
+Your site is live and working!
+
+Monitor: pm2 logs nextute-backend
+Restart: pm2 restart nextute-backend
+Redeploy: DEPLOY-NOW.bat

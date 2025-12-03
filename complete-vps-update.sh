@@ -2,7 +2,7 @@
 
 # Complete VPS Update Script
 # Updates EVERYTHING: Backend + Frontend + All Changes
-# VPS: 72.60.218.219
+# VPS: 72update frontend also
 
 echo "🚀 COMPLETE VPS UPDATE"
 echo "======================"
@@ -70,8 +70,16 @@ ssh $VPS_USER@$VPS_IP << 'ENDSSH'
     echo "🔧 STEP 4: Updating backend..."
     cd backend
     
+    echo "  → Fixing bcrypt imports..."
+    sed -i 's/from "bcrypt"/from "bcryptjs"/g' prisma/seed.js
+    sed -i 's/from "bcrypt"/from "bcryptjs"/g' controllers/forgotAndResetPasswordController.js
+    echo "  ✅ bcrypt imports fixed"
+    
     echo "  → Installing dependencies..."
     npm install
+    
+    echo "  → Regenerating Prisma client..."
+    npx prisma generate
     
     echo "  → Updating database..."
     npx prisma db push || true

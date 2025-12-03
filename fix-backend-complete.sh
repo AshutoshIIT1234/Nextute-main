@@ -69,3 +69,4 @@ echo "  https://www.nextute.com/api/institutes/all-institutes"
 echo ""
 echo "Monitor logs:"
 echo "  pm2 logs nextute-backend"
+.

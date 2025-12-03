@@ -18,6 +18,7 @@ import paymentRoutes from './routes/paymentRoutes.js';
 import mentorshipRoutes from './routes/mentorshipRoutes.js';
 import chatbotRoutes from './routes/chatbotRoutes.js';
 import careerRoutes from './routes/careerRoutes.js';
+import techHuntRoutes from './routes/techHuntRoutes.js';
 
 dotenv.config();
 
@@ -134,6 +135,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/mentorship', mentorshipRoutes);
 app.use('/api/chat', chatbotRoutes);
 app.use('/api/careers', careerRoutes);
+app.use('/api/tech-hunt', techHuntRoutes);
 
 // Debug routes (only in development)
 if (process.env.NODE_ENV !== 'production') {

@@ -1,0 +1,77 @@
+╔══════════════════════════════════════════════════════════════╗
+║           TECH HUNT EVENT - QUICK REFERENCE                  ║
+╚══════════════════════════════════════════════════════════════╝
+
+📍 PAGE URL
+   Production: https://www.nextute.com/tech-hunt
+   Local:      http://localhost:5173/tech-hunt
+
+🚀 DEPLOY TO PRODUCTION
+   Windows:    deploy-tech-hunt.bat
+   Linux/Mac:  ./deploy-tech-hunt.sh
+
+🧪 TEST LOCALLY
+   Windows:    test-tech-hunt-local.bat
+   Manual:     cd backend && npx prisma db push && npm run dev
+               cd frontend && npm run dev
+
+📊 API ENDPOINTS
+   POST /api/tech-hunt/claim         - Submit form
+   GET  /api/tech-hunt/stats         - Get statistics
+   GET  /api/tech-hunt/participants  - Get all data
+
+📝 FORM FIELDS
+   Required:  Name, Roll Number, Team Name
+   Optional:  Email, Phone, College
+
+✅ FEATURES
+   ✓ Duplicate prevention (roll number + team name)
+   ✓ Real-time statistics
+   ✓ Success animation
+   ✓ Mobile responsive
+   ✓ Toast notifications
+   ✓ Loading states
+
+🗄️ DATABASE TABLE
+   tech_hunt_participants
+   - id, name, roll_number, team_name
+   - email, phone, college (optional)
+   - claimed_at, created_at, updated_at
+
+🔍 VIEW PARTICIPANTS
+   API:      curl https://www.nextute.com/api/tech-hunt/participants
+   Database: cd backend && npx prisma studio
+
+📚 DOCUMENTATION
+   Complete:  TECH_HUNT_README.md
+   Summary:   TECH_HUNT_SUMMARY.md
+   Preview:   TECH_HUNT_PREVIEW.md
+
+🛠️ TROUBLESHOOTING
+   Backend:   pm2 logs backend
+   Database:  cd backend && npx prisma generate && npx prisma db push
+   Frontend:  cd frontend && rm -rf dist && npm run build
+
+📞 QUICK TESTS
+   1. Visit /tech-hunt
+   2. Fill form and submit
+   3. Verify success message
+   4. Try duplicate submission
+   5. Check stats update
+
+🎨 CUSTOMIZATION
+   Event name:  frontend/src/pages/TechHuntSponsor.jsx (line ~90)
+   Colors:      Search for "bg-gradient-to-" in TechHuntSponsor.jsx
+   Rewards:     Edit benefits cards in TechHuntSponsor.jsx
+
+⚡ QUICK COMMANDS
+   Deploy:      deploy-tech-hunt.bat
+   Test Local:  test-tech-hunt-local.bat
+   View Logs:   pm2 logs backend
+   DB Studio:   cd backend && npx prisma studio
+   Get Stats:   curl localhost:8080/api/tech-hunt/stats
+
+╔══════════════════════════════════════════════════════════════╗
+║  Status: ✅ Ready to Deploy                                  ║
+║  Time to Deploy: ~5 minutes                                  ║
+╚══════════════════════════════════════════════════════════════╝

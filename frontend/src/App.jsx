@@ -71,6 +71,7 @@ const CoursesComingSoon = lazy(() => import("./pages/CoursesComingSoon"));
 const MentorshipComingSoon = lazy(() => import("./pages/MentorshipComingSoon"));
 const MentorDetailPage = lazy(() => import("./pages/MentorDetailPage"));
 const CareersPage = lazy(() => import("./pages/CareersPage"));
+const TechHuntSponsor = lazy(() => import("./pages/TechHuntSponsor"));
 
 const App = memo(() => {
   const { showSignup, showLogin } = useContext(AppContext);
@@ -180,6 +181,7 @@ const App = memo(() => {
             <Route path="/services/mentorship" element={<MentorshipComingSoon />} />
             <Route path="/mentor/:id" element={<MentorDetailPage />} />
             <Route path="/careers" element={<CareersPage />} />
+            <Route path="/tech-hunt" element={<TechHuntSponsor />} />
           </Routes>
         </Suspense>
         {showLogin && <LoginPopup />}
